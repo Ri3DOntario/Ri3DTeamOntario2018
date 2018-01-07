@@ -30,7 +30,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveSubsystem extends Subsystem {
 	
-	// AnalogInput leftEnc, rightEnc;
 	TalonSRX rightMaster, rightSlave, leftMaster, leftSlave;
 	Solenoid gearShiftSolenoid;
 	SpeedControllerGroup leftDrive, rightDrive;
@@ -40,7 +39,6 @@ public class DriveSubsystem extends Subsystem {
 	private double kPE = 0.0001, kIE = 0.0000006, kDE = 0.00001; // Encoder PID
 	
 	
-//    public ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
     DoubleSolenoid gearShift = new DoubleSolenoid(RobotMap.PCM, RobotMap.shotPinForward, RobotMap.shotPinReverse);
     
@@ -83,7 +81,7 @@ public class DriveSubsystem extends Subsystem {
 	}
 	
 	public void joystickDrive(double x, double y) {
-		myDrive.curvatureDrive(y, x, Robot.oi.getJoystick1().getRawButton(1));
+		myDrive.curvatureDrive(y, x, Robot.oi.getJoystick1().getRawButton(2));
 		
 		if (Robot.oi.getJoystick1().getRawButton(1)) {
 			shiftGears(true);
