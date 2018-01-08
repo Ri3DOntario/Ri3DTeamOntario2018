@@ -21,7 +21,7 @@ public class DriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveSubsystem.joystickDrive(Robot.oi.getJoystick1().getRawAxis(1), Robot.oi.getJoystick1().getRawAxis(4));
+    	Robot.driveSubsystem.joystickDrive(Robot.oi.joystick1.getRawAxis(1), Robot.oi.joystick1.getRawAxis(4));
     	
     }
 
