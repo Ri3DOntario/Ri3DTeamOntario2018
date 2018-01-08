@@ -63,7 +63,7 @@ public class DriveStraightToDistance extends Command {
 		Robot.driveSubsystem.resetEncPID();
 		Robot.driveSubsystem.Setpoint(mySetpoint);
 		Robot.driveSubsystem.resetEnc();
-		Robot.driveSubsystem.zeroGyro();
+		Robot.driveSubsystem.resetGyro();
 		gyroPID.reset();
 		gyroPID.enable();
 		Robot.driveSubsystem.enableEncPID();   	
@@ -94,7 +94,7 @@ public class DriveStraightToDistance extends Command {
 		gyroPID.disable();
 		Robot.driveSubsystem.arcadeDrive(0, 0); // stop motors
 		Robot.driveSubsystem.resetEnc();
-		Robot.driveSubsystem.zeroGyro();
+		Robot.driveSubsystem.resetGyro();
     }
 
     // Called when another command which requires one or more of the same

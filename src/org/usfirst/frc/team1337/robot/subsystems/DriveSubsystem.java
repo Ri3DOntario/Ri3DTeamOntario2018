@@ -45,7 +45,7 @@ public class DriveSubsystem extends Subsystem {
 	DifferentialDrive myDrive;
 	PIDController encoderPID;
 	double speed;
-	//needs to be tuned
+	// needs to be tuned
 	private double kPE = 0.01, kIE = 0.0001, kDE = 0.1; // Encoder PID
 	public double reverse = 1;
 
@@ -74,23 +74,16 @@ public class DriveSubsystem extends Subsystem {
 
 		// gearShiftSolenoid = new Solenoid(0);
 
-		leftMaster.configPeakOutputForward(1, 0); //full 12v, no timeout
-		rightMaster.configPeakOutputReverse(1, 0); //full 12v, no timeout
+		leftMaster.configPeakOutputForward(1, 0); // full 12v, no timeout
+		rightMaster.configPeakOutputReverse(1, 0); // full 12v, no timeout
 
 		// leftMaster.setNeutralMode(false);
 		// rightMaster.setNeutralMode(false);
 	}
 
 	public void joystickDrive(double x, double y) {
-		/*
-		 * if(Robot.oi.joystick1.getRawButton(10) && reverse == 1) { reverse = -1; }
-		 * else if (Robot.oi.joystick1.getRawButton(10) && reverse == -1) { reverse = 1;
-		 * }
-		 * 
-		 */
-
 		myDrive.curvatureDrive(y * reverse, x, true);
-		// myDrive.arcadeDrive(y, x, true);
+
 		if (Robot.oi.joystick1.getRawButton(1))
 			shiftGears(true);
 		else
@@ -102,7 +95,7 @@ public class DriveSubsystem extends Subsystem {
 		rightEnc.reset();
 	}
 
-	public void zeroGyro() {
+	public void resetGyro() {
 		gyro.reset();
 	}
 
@@ -178,6 +171,6 @@ public class DriveSubsystem extends Subsystem {
 		SmartDashboard.putNumber("left encoder", leftEnc.getDistance());
 		SmartDashboard.putNumber("right encoder", rightEnc.getDistance());
 		SmartDashboard.putNumber("gyro", gyro.getAngle());
-		SmartDashboard.putNumber("ultrasonic", sonic.getRangeMM());	
+		SmartDashboard.putNumber("ultrasonic", sonic.getRangeMM());
 	}
 }

@@ -64,7 +64,7 @@ public class GyroTurn extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		Robot.driveSubsystem.resetEnc();
-		Robot.driveSubsystem.zeroGyro();
+		Robot.driveSubsystem.resetGyro();
 
 		gyroPID.reset();
 		gyroPID.enable();
@@ -92,7 +92,7 @@ public class GyroTurn extends Command {
 		gyroPID.disable();
 		Robot.driveSubsystem.arcadeDrive(0, 0);
 		Robot.driveSubsystem.resetEnc();
-		Robot.driveSubsystem.zeroGyro();
+		Robot.driveSubsystem.resetGyro();
 	}
 
 	// Called when another command which requires one or more of the same
