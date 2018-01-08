@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -25,6 +26,7 @@ public class Climber extends Subsystem {
 
 		climbLeft = new SpeedControllerGroup(leftMaster, leftSlave);
 		climbRight = new SpeedControllerGroup(rightMaster, rightSlave);
+		climbRight.setInverted(true);
 	}
 
 	public void initDefaultCommand() {
@@ -33,6 +35,10 @@ public class Climber extends Subsystem {
 
 	public void climbSet(double speed) {
 		climbLeft.set(speed);
-		climbRight.set(-speed);
+		climbRight.set(speed);
+	}
+	
+	public void logging() {
+		SmartDashboard.putNumber("Climb speed", climbLeft.get());
 	}
 }
