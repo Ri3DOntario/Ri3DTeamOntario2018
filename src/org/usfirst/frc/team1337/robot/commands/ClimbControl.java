@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1337.robot.commands;
 
+import org.usfirst.frc.team1337.robot.OI;
 import org.usfirst.frc.team1337.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -19,7 +20,7 @@ public class ClimbControl extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    		Robot.climb.climbSet(Robot.oi.joystick1.getRawAxis(2) - Robot.oi.joystick1.getRawAxis(3));
+    		Robot.climb.climbSet(Robot.oi.joystick1.getRawAxis(OI.j1LT) - Robot.oi.joystick1.getRawAxis(OI.j1RT));
     }
 
     // Make this return true when this Command no longer needs to run execute()

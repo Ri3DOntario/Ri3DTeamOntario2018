@@ -21,13 +21,10 @@ public class OI {
 	Button j1button6 = new JoystickButton(joystick1, 6);
 	Button j1button7 = new JoystickButton(joystick1, 7);
 	Button j1button10 = new JoystickButton(joystick1, 10);
+	public static final int j1LT = 2, j1RT = 3;
 	
 	public OI(){
-	j1button10.whenPressed(new ReverseDrive());	
-	}
-	
-	public Joystick getJoystick1(){
-		return joystick1; // returns joystick1 values
+		j1button10.whenPressed(new ReverseDrive());	
 	}
 	
 }
