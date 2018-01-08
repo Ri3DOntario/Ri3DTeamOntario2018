@@ -61,8 +61,8 @@ public class DriveSubsystem extends Subsystem {
 		rightSlave = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE_SLAVE);
 		leftSlave = new WPI_TalonSRX(RobotMap.LEFT_DRIVE_SLAVE);
 
-		leftEnc = new Encoder(0, 1, false, EncodingType.k4X);
-		rightEnc = new Encoder(2, 3, false, EncodingType.k4X);
+		leftEnc = new Encoder(RobotMap.LEFT_DRIVE_ENC_A, RobotMap.LEFT_DRIVE_ENC_B, false, EncodingType.k4X);
+		rightEnc = new Encoder(RobotMap.RIGHT_DRIVE_ENC_A, RobotMap.RIGHT_DRIVE_ENC_B, false, EncodingType.k4X);
 
 		leftDrive = new SpeedControllerGroup(leftMaster, leftSlave);
 		rightDrive = new SpeedControllerGroup(rightMaster, rightSlave);
@@ -73,8 +73,8 @@ public class DriveSubsystem extends Subsystem {
 
 		// gearShiftSolenoid = new Solenoid(0);
 
-		leftMaster.configPeakOutputForward(1, 0); //no timeout
-		rightMaster.configPeakOutputReverse(1, 0); //no timeout
+		leftMaster.configPeakOutputForward(1, 0); //full 12v, no timeout
+		rightMaster.configPeakOutputReverse(1, 0); //full 12v, no timeout
 
 		// leftMaster.setNeutralMode(false);
 		// rightMaster.setNeutralMode(false);
