@@ -15,10 +15,7 @@ public class ReverseDrive extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		logging();
-		if (Robot.oi.joystick1.getRawButton(10) && Robot.driveSubsystem.reverse == 1)
-			Robot.driveSubsystem.reverse = -1;
-		else
-			Robot.driveSubsystem.reverse = 1;
+		Robot.driveSubsystem.reverse *= -1;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -41,7 +38,7 @@ public class ReverseDrive extends Command {
 	}
 	
 	void logging() {
-		Robot.logCurrentCommandAndSubsystem("ReverseDrive");
+		Robot.logCurrentCommand("ReverseDrive");
 		Robot.driveSubsystem.logging();
 	}
 }

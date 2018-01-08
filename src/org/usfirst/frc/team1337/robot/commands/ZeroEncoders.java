@@ -39,7 +39,7 @@ public class ZeroEncoders extends Command {
     }
     
     void logging() {
-    		Robot.logCurrentCommandAndSubsystem("ZeroEncoders");
+    		Robot.logCurrentCommand("ZeroEncoders");
     		Robot.driveSubsystem.logging();
     }
 }

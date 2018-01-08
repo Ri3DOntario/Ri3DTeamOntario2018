@@ -123,7 +123,7 @@ public class Robot extends IterativeRobot {
 		LiveWindow.run();
 	}
 	
-	public static void logCurrentCommandAndSubsystem(String command) {
+	public static void logCurrentCommand(String command) {
 		SmartDashboard.putString("Current command", command);
 	}
 }

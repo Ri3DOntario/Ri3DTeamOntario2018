@@ -21,9 +21,9 @@ public class Intake extends Command {
 	protected void execute() {
 		logging();
 		if (Robot.oi.joystick1.getRawButton(2))
-			Robot.intake.IntakeSet(1);
+			Robot.intake.set(1);
 		else
-			Robot.intake.IntakeSet(0);
+			Robot.intake.set(0);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -42,7 +42,7 @@ public class Intake extends Command {
 	}
 
 	void logging() {
-		Robot.logCurrentCommandAndSubsystem("Intake");
+		Robot.logCurrentCommand("Intake");
 		Robot.intake.logging();
 	}
 }
