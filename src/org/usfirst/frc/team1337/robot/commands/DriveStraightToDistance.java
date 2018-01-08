@@ -20,14 +20,12 @@ public class DriveStraightToDistance extends Command {
 	double mySetpoint;
 	// Probably needs to be tuned
 	private double kPG = 0.055, kIG = 0.0, kDG = 0.055; // Gyro PID
-	// private double kPE = 0.001, kIE = 0.00, kDE = 0; // Encoder PID
+	private double kPE = 0.001, kIE = 0.00, kDE = 0; // Encoder PID
 
 	private double rotate;
     @SuppressWarnings("deprecation")
 	public DriveStraightToDistance(double ticks, double time) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	timeout = time;
+    		timeout = time;
 		requires(Robot.driveSubsystem);
 		mySetpoint = ticks;
 		gyroPID = new PIDController(kPG, kIG, kDG, new PIDSource() {
@@ -61,7 +59,7 @@ public class DriveStraightToDistance extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveSubsystem.initEncPID();
+    		Robot.driveSubsystem.initEncPID();
 		Robot.driveSubsystem.resetEncPID();
 		Robot.driveSubsystem.Setpoint(mySetpoint);
 		Robot.driveSubsystem.resetEnc();
@@ -74,7 +72,7 @@ public class DriveStraightToDistance extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveSubsystem.enableEncPID();
+    		Robot.driveSubsystem.enableEncPID();
 
 		// changed for desired
 		// speeds
@@ -86,17 +84,16 @@ public class DriveStraightToDistance extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (counter >= timeout){
+    		if (counter >= timeout)
 			return true;
-		}else{
+		else
 			return false;
-		}
     
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	SmartDashboard.putBoolean("On Target Enc", Robot.driveSubsystem.encOnTarget());
+    		SmartDashboard.putBoolean("On Target Enc", Robot.driveSubsystem.encOnTarget());
 		Robot.driveSubsystem.disableEncPID();
 		gyroPID.disable();
 		Robot.driveSubsystem.arcadeDrive(0, 0);
@@ -107,7 +104,7 @@ public class DriveStraightToDistance extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	SmartDashboard.putBoolean("On Target Enc", Robot.driveSubsystem.encOnTarget());
+    		SmartDashboard.putBoolean("On Target Enc", Robot.driveSubsystem.encOnTarget());
 
 		Robot.driveSubsystem.disableEncPID();
 		gyroPID.disable();
