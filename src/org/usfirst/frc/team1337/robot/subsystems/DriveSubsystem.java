@@ -55,7 +55,7 @@ public class DriveSubsystem extends Subsystem {
 		} catch (RuntimeException ex) {
 			DriverStation.reportError("Error instantiating gyro " + ex.getMessage(), true);
 		}
-		sonic = new Ultrasonic(4, 5);
+		sonic = new Ultrasonic(RobotMap.ULTRASONIC_PING, RobotMap.ULTRASONIC_ECHO);
 
 		rightMaster = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE_MASTER);
 		leftMaster = new WPI_TalonSRX(RobotMap.LEFT_DRIVE_MASTER);
@@ -76,14 +76,12 @@ public class DriveSubsystem extends Subsystem {
 
 		leftMaster.configPeakOutputForward(1, 0); // full 12v, no timeout
 		rightMaster.configPeakOutputReverse(1, 0); // full 12v, no timeout
-
-		// leftMaster.setNeutralMode(false);
-		// rightMaster.setNeutralMode(false);
 	}
 
 	public void joystickDrive(double x, double y) {
+		/*if (Robot.oi.joystick1.getRawButtonPressed(10))
+			reverse *= -1;*/
 		myDrive.curvatureDrive(y * reverse, x, true);
-
 		if (Robot.oi.joystick1.getRawButton(1))
 			shiftGears(true);
 		else
@@ -110,7 +108,11 @@ public class DriveSubsystem extends Subsystem {
 	public void arcadeDrive(double speed, double rotate) {
 		myDrive.arcadeDrive(speed, rotate);
 	}
-
+	
+	public void stopMotors() {
+		arcadeDrive(0,0);
+	}
+	
 	public void Setpoint(double ticks) {
 		encoderPID.setSetpoint(ticks);
 	}

@@ -34,7 +34,7 @@ public class Climber extends Subsystem {
 		setDefaultCommand(new ClimbControl());
 	}
 
-	public void climbSet(double speed) {
+	public void set(double speed) {
 		climbLeft.set(speed);
 		climbRight.set(speed);
 	}

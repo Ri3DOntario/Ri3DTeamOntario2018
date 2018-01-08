@@ -26,7 +26,7 @@ public class Intaker extends Subsystem {
 		setDefaultCommand(new Intake());
 	}
 
-	public void IntakeSet(double speed) {
+	public void set(double speed) {
 		leftIntake.set(speed);
 		rightIntake.set(-speed);
 	}

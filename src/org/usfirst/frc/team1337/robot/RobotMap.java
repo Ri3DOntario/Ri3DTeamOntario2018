@@ -11,6 +11,7 @@ public class RobotMap {
 	public static final int RIGHT_DRIVE_SLAVE = 2, RIGHT_DRIVE_MASTER = 3;
 	public static final int LEFT_DRIVE_ENC_A = 0, LEFT_DRIVE_ENC_B = 1;
 	public static final int RIGHT_DRIVE_ENC_A = 2, RIGHT_DRIVE_ENC_B = 3;
+	public static final int ULTRASONIC_PING = 4, ULTRASONIC_ECHO = 5;
 	
 	public static final int LEFT_CLIMB_MASTER = 5, LEFT_CLIMB_SLAVE = 6;
 	public static final int RIGHT_CLIMB_MASTER = 7, RIGHT_CLIMB_SLAVE = 8;

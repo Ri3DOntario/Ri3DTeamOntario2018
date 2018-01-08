@@ -92,7 +92,7 @@ public class DriveStraightToDistance extends Command {
     		logging();
 		Robot.driveSubsystem.disableEncPID();
 		gyroPID.disable();
-		Robot.driveSubsystem.arcadeDrive(0, 0); // stop motors
+		Robot.driveSubsystem.stopMotors();
 		Robot.driveSubsystem.resetEnc();
 		Robot.driveSubsystem.resetGyro();
     }
