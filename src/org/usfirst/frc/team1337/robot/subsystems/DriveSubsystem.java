@@ -20,17 +20,22 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class DriveSubsystem extends Subsystem {
+	ADXRS450_Gyro gyro;
+	Ultrasonic sonic;
 	Encoder leftEnc, rightEnc;
 	WPI_TalonSRX rightMaster, rightSlave, leftMaster, leftSlave;
 	//Solenoid gearShiftSolenoid;
@@ -41,13 +46,13 @@ public class DriveSubsystem extends Subsystem {
 	private double kPE = 0.0, kIE = 0.0, kDE = 0.0; // Encoder PID
 	public double reverse = 1;
 
-	public int reverseTimer = 0;
 	public DriveSubsystem() {
 		try {
-		//initialize gyro
+		gyro = new ADXRS450_Gyro(SPI.Port.kMXP);
 		} catch (RuntimeException ex) {
 			DriverStation.reportError("Error instantiating gyro " + ex.getMessage(), true);
 		}
+sonic = new Ultrasonic(0,1);
 
 		rightMaster = new WPI_TalonSRX(RobotMap.frontRightDrive);
 		leftMaster = new WPI_TalonSRX(RobotMap.frontLeftDrive);
@@ -56,8 +61,7 @@ public class DriveSubsystem extends Subsystem {
 		
 		leftEnc = new Encoder(0,1);
 		rightEnc=new Encoder(2,3);
-	/*	leftSlave.set(ControlMode.Follower, leftMaster.getDeviceID());
-		rightSlave.set(ControlMode.Follower, rightMaster.getDeviceID());*/
+	
 		
 		leftDrive=new SpeedControllerGroup(leftMaster, leftSlave);
 		rightDrive = new SpeedControllerGroup(rightMaster, rightSlave);
@@ -66,18 +70,10 @@ public class DriveSubsystem extends Subsystem {
 		rightDrive.setInverted(false);
 		leftDrive.setInverted(true);
 
-		//rightMaster.setFeedbackDevice(CANTalon.FeedbackDevice.AnalogEncoder);
-		//leftMaster.setFeedbackDevice(CANTalon.FeedbackDevice.AnalogEncoder);
-		//rightMaster.setPosition(0);
-		//leftMaster.setPosition(0);
+	
 		//gearShiftSolenoid = new Solenoid(0);
 
-		//rightMaster.setProfile(0);
-		//leftMaster.setProfile(0);
-
-		// rightMaster.setPID(2.3, 0, 23);
-		// leftMaster.setPID(2.1, 0, 21);
-
+	
 		//leftMaster.configPeakOutputVoltage(+12f, -12f);
 		//rightMaster.configPeakOutputVoltage(+12f, -12f);
 
@@ -86,7 +82,6 @@ public class DriveSubsystem extends Subsystem {
 	}
 	
 	public void joystickDrive(double x, double y) {
-	reverseTimer++;
 	/*	if(Robot.oi.joystick1.getRawButton(10) && reverse == 1) {
 			reverse = -1;
 		} else if (Robot.oi.joystick1.getRawButton(10) && reverse == -1) {
@@ -111,6 +106,7 @@ public class DriveSubsystem extends Subsystem {
 	}
 	
 	public void zeroGyro() {
+		gyro.reset();
 	}
 	
 	public void shiftGears(boolean shift) {
@@ -185,6 +181,8 @@ public class DriveSubsystem extends Subsystem {
     public void logging() {
     	SmartDashboard.putNumber("left encoder", leftEnc.getDistance());
     	SmartDashboard.putNumber("right encoder", rightEnc.getDistance());
+    	SmartDashboard.putNumber("gyro", gyro.getAngle());
+    	SmartDashboard.putNumber("ultrasonic", sonic.getRangeMM());
     }
 }
 

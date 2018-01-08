@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1337.robot.commands;
 
+import org.usfirst.frc.team1337.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -10,6 +12,8 @@ public class Intake extends Command {
     public Intake() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.intake);
+    	
     }
 
     // Called just before this Command runs the first time
@@ -18,6 +22,11 @@ public class Intake extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(Robot.oi.joystick1.getRawButton(2)) {
+    		Robot.intake.IntakeSet(1);
+    	} else {
+    		Robot.intake.IntakeSet(0);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1337.robot.subsystems;
 
+import org.usfirst.frc.team1337.robot.commands.Intake;
+
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -18,6 +20,7 @@ public Intaker(){
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    	setDefaultCommand(new Intake());
     }
     public void IntakeSet(double speed) {
     	leftIntake.set(speed);
