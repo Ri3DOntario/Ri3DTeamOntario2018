@@ -19,7 +19,7 @@ WPI_TalonSRX arm;
     // here. Call these from Commands.
 public Arm() {
 	arm = new WPI_TalonSRX(8);
-	arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
+	arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 5);
 	arm.config_kP(0, 0.0, 0);
 	arm.config_kI(0, 0.0, 0);
 	arm.config_kD(0, 0.0, 0);
@@ -30,7 +30,8 @@ public Arm() {
     	setDefaultCommand(new ArmMove());
     }
     public void ArmSet(double speed) {
-    	arm.set(ControlMode.PercentOutput, speed);
+    	arm.set(ControlMode.PercentOutput, speed*0.25);
+    	logging();
     }
     public void ArmPID(double rotation) {
     	arm.set(ControlMode.Position, rotation);

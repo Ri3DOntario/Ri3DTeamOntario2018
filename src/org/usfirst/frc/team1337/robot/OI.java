@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 	public Joystick joystick1 = new Joystick(0);
+	public Joystick joystick2 = new Joystick(1);
 	Button j1button1 = new JoystickButton(joystick1, 1);
 	Button j1button2 = new JoystickButton(joystick1, 2);
 	Button j1button3 = new JoystickButton(joystick1, 3);
