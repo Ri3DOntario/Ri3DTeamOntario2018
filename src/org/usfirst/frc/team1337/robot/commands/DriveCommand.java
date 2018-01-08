@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1337.robot.commands;
 
+import org.usfirst.frc.team1337.robot.OI;
 import org.usfirst.frc.team1337.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,9 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveCommand extends Command {
 
     public DriveCommand() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	requires(Robot.driveSubsystem);
+    		requires(Robot.driveSubsystem);
     }
 
     // Called just before this Command runs the first time
@@ -21,8 +20,8 @@ public class DriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveSubsystem.joystickDrive(Robot.oi.joystick1.getRawAxis(1), Robot.oi.joystick1.getRawAxis(4));
-    	
+
+    		Robot.driveSubsystem.joystickDrive(Robot.oi.joystick1.getRawAxis(OI.j1LeftY), Robot.oi.joystick1.getRawAxis(OI.j1RightX));   	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -37,6 +36,6 @@ public class DriveCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
+    		end();
     }
 }
