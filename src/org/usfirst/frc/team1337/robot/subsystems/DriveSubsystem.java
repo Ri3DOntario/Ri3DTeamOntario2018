@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.*;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
@@ -60,8 +61,8 @@ public class DriveSubsystem extends Subsystem {
 		rightSlave = new WPI_TalonSRX(RobotMap.backRightDrive);
 		leftSlave = new WPI_TalonSRX(RobotMap.backLeftDrive);
 
-		leftEnc = new Encoder(0, 1);
-		rightEnc = new Encoder(2, 3);
+		leftEnc = new Encoder(0, 1, false, EncodingType.k4X);
+		rightEnc = new Encoder(2, 3, false, EncodingType.k4X);
 
 		leftDrive = new SpeedControllerGroup(leftMaster, leftSlave);
 		rightDrive = new SpeedControllerGroup(rightMaster, rightSlave);
@@ -84,6 +85,7 @@ public class DriveSubsystem extends Subsystem {
 		 * if(Robot.oi.joystick1.getRawButton(10) && reverse == 1) { reverse = -1; }
 		 * else if (Robot.oi.joystick1.getRawButton(10) && reverse == -1) { reverse = 1;
 		 * }
+		 * 
 		 */
 
 		myDrive.curvatureDrive(y * reverse, x, true);
@@ -92,6 +94,7 @@ public class DriveSubsystem extends Subsystem {
 			shiftGears(true);
 		else
 			shiftGears(false);
+		logging();
 	}
 
 	public void resetEnc() {
@@ -176,5 +179,6 @@ public class DriveSubsystem extends Subsystem {
 		SmartDashboard.putNumber("right encoder", rightEnc.getDistance());
 		SmartDashboard.putNumber("gyro", gyro.getAngle());
 		SmartDashboard.putNumber("ultrasonic", sonic.getRangeMM());
+		
 	}
 }
