@@ -56,10 +56,10 @@ public class DriveSubsystem extends Subsystem {
 		}
 		sonic = new Ultrasonic(4, 5);
 
-		rightMaster = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE2);
-		leftMaster = new WPI_TalonSRX(RobotMap.LEFT_DRIVE2);
-		rightSlave = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE1);
-		leftSlave = new WPI_TalonSRX(RobotMap.LEFT_DRIVE1);
+		rightMaster = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE_MASTER);
+		leftMaster = new WPI_TalonSRX(RobotMap.LEFT_DRIVE_MASTER);
+		rightSlave = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE_SLAVE);
+		leftSlave = new WPI_TalonSRX(RobotMap.LEFT_DRIVE_SLAVE);
 
 		leftEnc = new Encoder(0, 1, false, EncodingType.k4X);
 		rightEnc = new Encoder(2, 3, false, EncodingType.k4X);
@@ -178,8 +178,6 @@ public class DriveSubsystem extends Subsystem {
 		SmartDashboard.putNumber("left encoder", leftEnc.getDistance());
 		SmartDashboard.putNumber("right encoder", rightEnc.getDistance());
 		SmartDashboard.putNumber("gyro", gyro.getAngle());
-		SmartDashboard.putNumber("ultrasonic", sonic.getRangeMM());
-		
-		
+		SmartDashboard.putNumber("ultrasonic", sonic.getRangeMM());	
 	}
 }
