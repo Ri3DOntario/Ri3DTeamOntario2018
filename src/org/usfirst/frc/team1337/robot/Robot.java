@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.usfirst.frc.team1337.robot.commands.AutonDriveStraight;
 import org.usfirst.frc.team1337.robot.commands.DriveCommand;
 import org.usfirst.frc.team1337.robot.subsystems.Climber;
 import org.usfirst.frc.team1337.robot.subsystems.DriveSubsystem;
@@ -37,7 +39,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		chooser.addDefault("Default Auto", null);
+		chooser.addDefault("Default Auto", new AutonDriveStraight());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 	}

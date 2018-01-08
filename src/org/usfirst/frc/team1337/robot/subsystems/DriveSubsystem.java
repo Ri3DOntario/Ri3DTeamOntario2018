@@ -45,7 +45,7 @@ public class DriveSubsystem extends Subsystem {
 	PIDController encoderPID;
 	double speed;
 	//needs to be tuned
-	private double kPE = 0.0, kIE = 0.0, kDE = 0.0; // Encoder PID
+	private double kPE = 0.01, kIE = 0.0001, kDE = 0.1; // Encoder PID
 	public double reverse = 1;
 
 	public DriveSubsystem() {
@@ -54,7 +54,7 @@ public class DriveSubsystem extends Subsystem {
 		} catch (RuntimeException ex) {
 			DriverStation.reportError("Error instantiating gyro " + ex.getMessage(), true);
 		}
-		sonic = new Ultrasonic(0, 1);
+		sonic = new Ultrasonic(4, 5);
 
 		rightMaster = new WPI_TalonSRX(RobotMap.frontRightDrive);
 		leftMaster = new WPI_TalonSRX(RobotMap.frontLeftDrive);
@@ -179,6 +179,7 @@ public class DriveSubsystem extends Subsystem {
 		SmartDashboard.putNumber("right encoder", rightEnc.getDistance());
 		SmartDashboard.putNumber("gyro", gyro.getAngle());
 		SmartDashboard.putNumber("ultrasonic", sonic.getRangeMM());
+		
 		
 	}
 }
