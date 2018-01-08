@@ -4,7 +4,7 @@ import java.util.Vector;
 
 import org.usfirst.frc.team1337.robot.Robot;
 import org.usfirst.frc.team1337.robot.RobotMap;
-import org.usfirst.frc.team1337.robot.commands.DriveCommand;
+import org.usfirst.frc.team1337.robot.commands.JoystickDrive;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.*;
@@ -111,7 +111,7 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		setDefaultCommand(new DriveCommand());
+		setDefaultCommand(new JoystickDrive());
 	}
 
 	public void arcadeDrive(double speed, double rotate) {

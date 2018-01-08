@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1337.robot.commands.AutonDriveStraight;
-import org.usfirst.frc.team1337.robot.commands.DriveCommand;
+import org.usfirst.frc.team1337.robot.commands.JoystickDrive;
 import org.usfirst.frc.team1337.robot.subsystems.Climber;
 import org.usfirst.frc.team1337.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team1337.robot.subsystems.Intaker;
@@ -24,7 +24,7 @@ import org.usfirst.frc.team1337.robot.subsystems.Intaker;
 public class Robot extends IterativeRobot {
 
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
-	public static final DriveCommand drive = new DriveCommand();
+	public static final JoystickDrive drive = new JoystickDrive();
 	public static final Climber climb = new Climber();
 	public static final Intaker intake = new Intaker();
 	public static OI oi;
