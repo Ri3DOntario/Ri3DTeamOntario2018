@@ -35,6 +35,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class DriveSubsystem extends Subsystem {
+	final double MAX_SPEED = 0.8;
 	ADXRS450_Gyro gyro;
 	Ultrasonic sonic;
 	Encoder leftEnc, rightEnc;
@@ -121,8 +122,8 @@ public class DriveSubsystem extends Subsystem {
 		encoderPID.setSetpoint(ticks);
 	}
 
-	public double sendSpeed() {
-		return Math.max(Math.min(0.8, speed), -0.8); // the double value can be
+	public double scaleSpeedPID() {
+		return Math.max(Math.min(MAX_SPEED, speed), -MAX_SPEED);
 	}
 
 	public void resetEncPID() {

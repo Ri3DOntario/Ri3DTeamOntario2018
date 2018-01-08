@@ -73,7 +73,7 @@ public class DriveStraightToDistance extends Command {
     protected void execute() {
     		Robot.driveSubsystem.enableEncPID();
 
-		Robot.driveSubsystem.arcadeDrive(Robot.driveSubsystem.sendSpeed(), rotate); // changed for desired speeds
+		Robot.driveSubsystem.arcadeDrive(Robot.driveSubsystem.scaleSpeedPID(), rotate); // changed for desired speeds
 
 		counter++;
 		logging();
