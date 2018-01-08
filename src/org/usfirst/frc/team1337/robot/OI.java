@@ -21,7 +21,7 @@ public class OI {
 	Button j1button6 = new JoystickButton(joystick1, 6);
 	Button j1button7 = new JoystickButton(joystick1, 7);
 	Button j1button10 = new JoystickButton(joystick1, 10);
-	public static final int j1LT = 2, j1RT = 3, j1LeftY = 1, j1RightX = 4;
+	public static final int J1_LT = 2, J1_RT = 3, J1_LEFT_STICK_Y_AXIS = 1, J1_RIGHT_STICK_X_AXIS = 4;
 	
 	public OI(){
 		j1button10.whenPressed(new ReverseDrive());
