@@ -12,8 +12,10 @@ import com.ctre.phoenix.motorcontrol.can.*;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -29,19 +31,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class DriveSubsystem extends Subsystem {
-	
-	TalonSRX rightMaster, rightSlave, leftMaster, leftSlave;
-	Solenoid gearShiftSolenoid;
+	Encoder leftEnc, rightEnc;
+	WPI_TalonSRX rightMaster, rightSlave, leftMaster, leftSlave;
+	//Solenoid gearShiftSolenoid;
 	SpeedControllerGroup leftDrive, rightDrive;
 	DifferentialDrive myDrive;
 	PIDController encoderPID;
 	double speed;
-	private double kPE = 0.0001, kIE = 0.0000006, kDE = 0.00001; // Encoder PID
-	
-	
+	private double kPE = 0.0, kIE = 0.0, kDE = 0.0; // Encoder PID
+	public double reverse = 1;
 
-    DoubleSolenoid gearShift = new DoubleSolenoid(RobotMap.PCM, RobotMap.shotPinForward, RobotMap.shotPinReverse);
-    
+	public int reverseTimer = 0;
 	public DriveSubsystem() {
 		try {
 		//initialize gyro
@@ -49,23 +49,28 @@ public class DriveSubsystem extends Subsystem {
 			DriverStation.reportError("Error instantiating gyro " + ex.getMessage(), true);
 		}
 
-		rightMaster = new TalonSRX(RobotMap.frontRightDrive);
-		leftMaster = new TalonSRX(RobotMap.frontLeftDrive);
-		rightSlave = new TalonSRX(RobotMap.backRightDrive);
-		leftSlave = new TalonSRX(RobotMap.backLeftDrive);
+		rightMaster = new WPI_TalonSRX(RobotMap.frontRightDrive);
+		leftMaster = new WPI_TalonSRX(RobotMap.frontLeftDrive);
+		rightSlave = new WPI_TalonSRX(RobotMap.backRightDrive);
+		leftSlave = new WPI_TalonSRX(RobotMap.backLeftDrive);
+		
+		leftEnc = new Encoder(0,1);
+		rightEnc=new Encoder(2,3);
 	/*	leftSlave.set(ControlMode.Follower, leftMaster.getDeviceID());
 		rightSlave.set(ControlMode.Follower, rightMaster.getDeviceID());*/
 		
-		leftDrive=new SpeedControllerGroup((SpeedController)leftMaster, (SpeedController)leftSlave);
-		rightDrive = new SpeedControllerGroup((SpeedController)rightMaster, (SpeedController)rightSlave);
+		leftDrive=new SpeedControllerGroup(leftMaster, leftSlave);
+		rightDrive = new SpeedControllerGroup(rightMaster, rightSlave);
 		
 		myDrive = new DifferentialDrive(leftDrive, rightDrive);
+		rightDrive.setInverted(false);
+		leftDrive.setInverted(true);
 
 		//rightMaster.setFeedbackDevice(CANTalon.FeedbackDevice.AnalogEncoder);
 		//leftMaster.setFeedbackDevice(CANTalon.FeedbackDevice.AnalogEncoder);
 		//rightMaster.setPosition(0);
 		//leftMaster.setPosition(0);
-		gearShiftSolenoid = new Solenoid(0);
+		//gearShiftSolenoid = new Solenoid(0);
 
 		//rightMaster.setProfile(0);
 		//leftMaster.setProfile(0);
@@ -81,9 +86,18 @@ public class DriveSubsystem extends Subsystem {
 	}
 	
 	public void joystickDrive(double x, double y) {
-		myDrive.curvatureDrive(y, x, Robot.oi.getJoystick1().getRawButton(2));
+	reverseTimer++;
+	/*	if(Robot.oi.joystick1.getRawButton(10) && reverse == 1) {
+			reverse = -1;
+		} else if (Robot.oi.joystick1.getRawButton(10) && reverse == -1) {
+			reverse = 1;
+		}*/
 		
-		if (Robot.oi.getJoystick1().getRawButton(1)) {
+		
+	
+	myDrive.curvatureDrive(y*reverse, x, true);
+	//	myDrive.arcadeDrive(y, x, true);
+		if (Robot.oi.joystick1.getRawButton(1)) {
 			shiftGears(true);
 		} else {
 			shiftGears(false);
@@ -91,7 +105,8 @@ public class DriveSubsystem extends Subsystem {
 	}
 	
 	public void resetEnc() {
-	
+	leftEnc.reset();
+	rightEnc.reset();
 
 	}
 	
@@ -99,7 +114,7 @@ public class DriveSubsystem extends Subsystem {
 	}
 	
 	public void shiftGears(boolean shift) {
-		gearShiftSolenoid.set(shift);
+	//	gearShiftSolenoid.set(shift);
 	}
 	
 	
@@ -135,8 +150,7 @@ public class DriveSubsystem extends Subsystem {
 		encoderPID.disable();
 	}
 
-	/*public void initEncPID() {
-	
+	public void initEncPID() {
 		encoderPID = new PIDController(kPE, kIE, kDE, new PIDSource() {
 			PIDSourceType m_sourceType = PIDSourceType.kDisplacement;
 
@@ -152,7 +166,7 @@ public class DriveSubsystem extends Subsystem {
 
 			@Override
 			public double pidGet() {
-				return Robot.dr.getAvgEncoderDistance();
+				return 0.0; //encoder distance
 			}
 		}, new PIDOutput() {
 			@Override
@@ -161,14 +175,16 @@ public class DriveSubsystem extends Subsystem {
 			}
 		});
 
-		encoderPID.setAbsoluteTolerance(25); // might need to be tuned if
-												// command never ends
+		encoderPID.setAbsoluteTolerance(25); // might need to be tuned if command never ends
 
 	}
-*/
+
 	public void enableEncPID() {
 		encoderPID.enable();
 	}
-    
+    public void logging() {
+    	SmartDashboard.putNumber("left encoder", leftEnc.getDistance());
+    	SmartDashboard.putNumber("right encoder", rightEnc.getDistance());
+    }
 }
 
