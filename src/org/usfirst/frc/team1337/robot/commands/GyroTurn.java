@@ -48,20 +48,17 @@ public class GyroTurn extends Command {
 				rotate = pidRotate;
 			}
 		});
-		gyroPID.setAbsoluteTolerance(1); // might need to be tuned if it
-											// never ends
-
+		
+		gyroPID.setAbsoluteTolerance(1); // might need to be tuned if it never ends
 		gyroPID.setInputRange(-180.0f, 180.0f);
 		gyroPID.setOutputRange(-1.0, 1.0);
 		gyroPID.setContinuous(true);
-
 		gyroPID.setSetpoint(angle);
 
 		/* Add the PID Controller to the Test-mode dashboard, allowing manual */
 		/* tuning of the Turn Controller's P, I and D coefficients. */
 		/* Typically, only the P value needs to be modified. */
 		LiveWindow.addActuator("Drive", "Gyro Only Tuning", gyroPID);
-
 	}
 
 	// Called just before this Command runs the first time
@@ -71,16 +68,12 @@ public class GyroTurn extends Command {
 
 		gyroPID.reset();
 		gyroPID.enable();
-
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		counter++;
-		// might not even be necessary... or work at all
-		rotate = Math.max(Math.min(0.8, rotate), -0.8); // the double value can
-														// be changed for
-														// desired speeds
+		counter++; // might not even be necessary... or work at all
+		rotate = Math.max(Math.min(0.8, rotate), -0.8); // the double value can be changed for desired speeds
 		Robot.driveSubsystem.arcadeDrive(0, rotate);
 		SmartDashboard.putBoolean("gyroTurnPID.onTarget()", gyroPID.onTarget());
 		SmartDashboard.putNumber("Gyro Error", gyroPID.getError());
@@ -88,12 +81,10 @@ public class GyroTurn extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if (counter >= timeout) {
+		if (counter >= timeout)
 			return true;
-		} else {
+		else
 			return false;
-		}
-
 	}
 
 	// Called once after isFinished returns true
@@ -108,10 +99,6 @@ public class GyroTurn extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		gyroPID.disable();
-		Robot.driveSubsystem.arcadeDrive(0, 0);
-		Robot.driveSubsystem.resetEnc();
-		Robot.driveSubsystem.zeroGyro();
-
+		end();
 	}
 }
