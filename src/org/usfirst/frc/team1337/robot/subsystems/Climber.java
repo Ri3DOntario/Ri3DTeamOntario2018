@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1337.robot.subsystems;
 
-import org.usfirst.frc.team1337.robot.Robot;
 import org.usfirst.frc.team1337.robot.RobotMap;
 import org.usfirst.frc.team1337.robot.commands.ClimbControl;
 
