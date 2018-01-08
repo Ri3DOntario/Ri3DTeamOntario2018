@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -43,11 +44,10 @@ public class DriveSubsystem extends Subsystem {
 	// Solenoid gearShiftSolenoid;
 	SpeedControllerGroup leftDrive, rightDrive;
 	DifferentialDrive myDrive;
-	PIDController encoderPID;
-	double speed;
-	// needs to be tuned
-	private double kPE = 0.01, kIE = 0.0001, kDE = 0.1; // Encoder PID
 	public double reverse = 1;
+	
+	public PIDController encoderPID, gyroPID;
+	double speed, rotate;
 
 	public DriveSubsystem() {
 		try {
@@ -78,6 +78,10 @@ public class DriveSubsystem extends Subsystem {
 		rightMaster.configPeakOutputReverse(1, 0); // full 12v, no timeout
 	}
 
+	public void initDefaultCommand() {
+		setDefaultCommand(new JoystickDrive());
+	}
+	
 	public void joystickDrive(double x, double y) {
 		/*if (Robot.oi.joystick1.getRawButtonPressed(10))
 			reverse *= -1;*/
@@ -88,6 +92,14 @@ public class DriveSubsystem extends Subsystem {
 			shiftGears(false);
 	}
 
+	public void arcadeDrive(double speed, double rotate) {
+		myDrive.arcadeDrive(speed, rotate);
+	}
+	
+	public void shiftGears(boolean shift) {
+		// gearShiftSolenoid.set(shift);
+	}
+	
 	public void resetEnc() {
 		leftEnc.reset();
 		rightEnc.reset();
@@ -96,45 +108,13 @@ public class DriveSubsystem extends Subsystem {
 	public void resetGyro() {
 		gyro.reset();
 	}
-
-	public void shiftGears(boolean shift) {
-		// gearShiftSolenoid.set(shift);
-	}
-
-	public void initDefaultCommand() {
-		setDefaultCommand(new JoystickDrive());
-	}
-
-	public void arcadeDrive(double speed, double rotate) {
-		myDrive.arcadeDrive(speed, rotate);
-	}
 	
 	public void stopMotors() {
 		arcadeDrive(0,0);
 	}
 	
-	public void Setpoint(double ticks) {
-		encoderPID.setSetpoint(ticks);
-	}
-
-	public double scaleSpeedPID() {
-		return Math.max(Math.min(MAX_SPEED, speed), -MAX_SPEED);
-	}
-
-	public void resetEncPID() {
-		encoderPID.reset();
-	}
-
-	public boolean encOnTarget() {
-		return encoderPID.onTarget();
-	}
-
-	public void disableEncPID() {
-		encoderPID.disable();
-	}
-
-	public void initEncPID() {
-		encoderPID = new PIDController(kPE, kIE, kDE, new PIDSource() {
+	public void initEncPID(double p, double i, double d) {
+		encoderPID = new PIDController(p, i, d, new PIDSource() {
 			PIDSourceType m_sourceType = PIDSourceType.kDisplacement;
 
 			@Override
@@ -160,15 +140,50 @@ public class DriveSubsystem extends Subsystem {
 
 		encoderPID.setAbsoluteTolerance(25); // might need to be tuned if command never ends
 	}
-
-	public void enableEncPID() {
-		encoderPID.enable();
+	
+	public double scaleSpeedPID() {
+		return Math.max(Math.min(MAX_SPEED, speed), -MAX_SPEED);
 	}
-
+	
 	public double getGyro() {
 		return gyro.getAngle();
 	}
+	
+	public void initGyroPID(double p, double i, double d) {
+		gyroPID = new PIDController(p, i, d, new PIDSource() {
+			PIDSourceType m_sourceType = PIDSourceType.kDisplacement;
 
+			@Override
+			public void setPIDSourceType(PIDSourceType pidSource) {
+				m_sourceType = pidSource;
+			}
+
+			@Override
+			public PIDSourceType getPIDSourceType() {
+				return m_sourceType;
+			}
+
+			@Override
+			public double pidGet() {
+				return Robot.driveSubsystem.getGyro();
+			}
+		}, new PIDOutput() {
+			@Override
+			public void pidWrite(double pidRotate) {
+				rotate = pidRotate;
+			}
+		});
+		
+		gyroPID.setAbsoluteTolerance(0.5); // might need to be tuned if it never ends
+		gyroPID.setInputRange(-180.0f, 180.0f);
+		gyroPID.setOutputRange(-1.0, 1.0);
+		gyroPID.setContinuous(true);
+	}
+	
+	public double scaleRotatePID() {
+		return Math.max(Math.min(MAX_SPEED, rotate), -MAX_SPEED);
+	}
+	
 	public void logging() {
 		SmartDashboard.putNumber("left encoder", leftEnc.getDistance());
 		SmartDashboard.putNumber("right encoder", rightEnc.getDistance());

@@ -14,66 +14,34 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class DriveStraightToDistance extends Command {
-	private PIDController gyroPID;
-	double counter = 0;
-	double timeout = 0;
-	double mySetpoint;
+	double counter = 0, timeout, mySetpoint;
 	// Probably needs to be tuned
 	private double kPG = 0.055, kIG = 0.0, kDG = 0.055; // Gyro PID
 	private double kPE = 0.001, kIE = 0.00, kDE = 0; // Encoder PID
-
-	private double rotate;
-    @SuppressWarnings("deprecation")
+	
 	public DriveStraightToDistance(double ticks, double time) {
-    		timeout = time;
 		requires(Robot.driveSubsystem);
+		timeout = time;
 		mySetpoint = ticks;
-		gyroPID = new PIDController(kPG, kIG, kDG, new PIDSource() {
-			PIDSourceType m_sourceType = PIDSourceType.kDisplacement;
-
-			@Override
-			public void setPIDSourceType(PIDSourceType pidSource) {
-				m_sourceType = pidSource;
-			}
-
-			@Override
-			public PIDSourceType getPIDSourceType() {
-				return m_sourceType;
-			}
-
-			@Override
-			public double pidGet() {
-				return Robot.driveSubsystem.getGyro();
-			}
-		}, new PIDOutput() {
-			@Override
-			public void pidWrite(double pidRotate) {
-				rotate = pidRotate;
-			}
-		});
-		gyroPID.setAbsoluteTolerance(0.05);
-		gyroPID.setSetpoint(0);
-
-		LiveWindow.addActuator("Drive Gyro", "Gyro PID Tuning", gyroPID);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    		Robot.driveSubsystem.initEncPID();
-		Robot.driveSubsystem.resetEncPID();
-		Robot.driveSubsystem.Setpoint(mySetpoint);
+    		Robot.driveSubsystem.initEncPID(kPE, kIE, kDE);
+    		Robot.driveSubsystem.initGyroPID(kPG, kIG, kDG);
+		Robot.driveSubsystem.encoderPID.reset();
+		Robot.driveSubsystem.gyroPID.reset();
+		Robot.driveSubsystem.encoderPID.setSetpoint(mySetpoint);
+		Robot.driveSubsystem.gyroPID.setSetpoint(0);
 		Robot.driveSubsystem.resetEnc();
 		Robot.driveSubsystem.resetGyro();
-		gyroPID.reset();
-		gyroPID.enable();
-		Robot.driveSubsystem.enableEncPID();   	
+		Robot.driveSubsystem.encoderPID.enable(); 
+		Robot.driveSubsystem.gyroPID.enable();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    		Robot.driveSubsystem.enableEncPID();
-
-		Robot.driveSubsystem.arcadeDrive(Robot.driveSubsystem.scaleSpeedPID(), rotate); // changed for desired speeds
+		Robot.driveSubsystem.arcadeDrive(Robot.driveSubsystem.scaleSpeedPID(), Robot.driveSubsystem.scaleRotatePID());
 
 		counter++;
 		logging();
@@ -89,9 +57,8 @@ public class DriveStraightToDistance extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    		logging();
-		Robot.driveSubsystem.disableEncPID();
-		gyroPID.disable();
+		Robot.driveSubsystem.encoderPID.disable();
+		Robot.driveSubsystem.gyroPID.disable();
 		Robot.driveSubsystem.stopMotors();
 		Robot.driveSubsystem.resetEnc();
 		Robot.driveSubsystem.resetGyro();
@@ -106,6 +73,7 @@ public class DriveStraightToDistance extends Command {
     void logging() {
     		Robot.logCurrentCommand("DriveStraightToDistance");
     		Robot.driveSubsystem.logging();
-    		SmartDashboard.putBoolean("On Target Enc", Robot.driveSubsystem.encOnTarget());
+    		SmartDashboard.putBoolean("On Target Enc", Robot.driveSubsystem.encoderPID.onTarget());
+    		SmartDashboard.putBoolean("On Target Gyro", Robot.driveSubsystem.gyroPID.onTarget());
     }
 }
