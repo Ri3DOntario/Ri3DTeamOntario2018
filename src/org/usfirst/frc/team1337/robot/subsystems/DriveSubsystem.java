@@ -90,6 +90,7 @@ public class DriveSubsystem extends Subsystem {
 			shiftGears(true);
 		else
 			shiftGears(false);
+		logging();
 	}
 
 	public void arcadeDrive(double speed, double rotate) {
