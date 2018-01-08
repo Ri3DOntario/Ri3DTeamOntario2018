@@ -11,7 +11,6 @@ import org.usfirst.frc.team1337.robot.OI;
 import org.usfirst.frc.team1337.robot.commands.DriveCommand;
 import org.usfirst.frc.team1337.robot.subsystems.Climber;
 import org.usfirst.frc.team1337.robot.subsystems.DriveSubsystem;
-import org.usfirst.frc.team1337.robot.subsystems.Intake;
 import org.usfirst.frc.team1337.robot.subsystems.Intaker;
 
 /**
@@ -29,7 +28,7 @@ public class Robot extends IterativeRobot {
 	public static final Intaker intake = new Intaker();
 	public static OI oi;
 
-	Command autonomousCommand;s
+	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
 	/**
