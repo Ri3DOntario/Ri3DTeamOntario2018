@@ -104,12 +104,6 @@ public class DriveStraightToDistance extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    		SmartDashboard.putBoolean("On Target Enc", Robot.driveSubsystem.encOnTarget());
-
-		Robot.driveSubsystem.disableEncPID();
-		gyroPID.disable();
-		Robot.driveSubsystem.arcadeDrive(0, 0);
-		Robot.driveSubsystem.resetEnc();
-		Robot.driveSubsystem.zeroGyro();
+    		end();
     }
 }
