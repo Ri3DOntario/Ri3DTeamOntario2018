@@ -20,7 +20,7 @@ public class JoystickDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-
+    		logging();
     		Robot.driveSubsystem.joystickDrive(Robot.oi.joystick1.getRawAxis(OI.J1_LEFT_STICK_Y_AXIS), Robot.oi.joystick1.getRawAxis(OI.J1_RIGHT_STICK_X_AXIS));   	
     }
 
@@ -37,5 +37,10 @@ public class JoystickDrive extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     		end();
+    }
+    
+    void logging() {
+    		Robot.logCurrentCommandAndSubsystem("JoystickDrive");
+    		Robot.driveSubsystem.logging();
     }
 }

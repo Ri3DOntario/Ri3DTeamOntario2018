@@ -16,6 +16,7 @@ public class ZeroEncoders extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     		Robot.driveSubsystem.resetEnc();
+    		logging();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -35,5 +36,10 @@ public class ZeroEncoders extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     		end();
+    }
+    
+    void logging() {
+    		Robot.logCurrentCommandAndSubsystem("ZeroEncoders");
+    		Robot.driveSubsystem.logging();
     }
 }

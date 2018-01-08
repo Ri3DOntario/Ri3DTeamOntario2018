@@ -76,7 +76,7 @@ public class DriveStraightToDistance extends Command {
 		Robot.driveSubsystem.arcadeDrive(Robot.driveSubsystem.sendSpeed(), rotate); // changed for desired speeds
 
 		counter++;
-		SmartDashboard.putBoolean("On Target Enc", Robot.driveSubsystem.encOnTarget());
+		logging();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -89,10 +89,10 @@ public class DriveStraightToDistance extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    		SmartDashboard.putBoolean("On Target Enc", Robot.driveSubsystem.encOnTarget());
+    		logging();
 		Robot.driveSubsystem.disableEncPID();
 		gyroPID.disable();
-		Robot.driveSubsystem.arcadeDrive(0, 0);
+		Robot.driveSubsystem.arcadeDrive(0, 0); // stop motors
 		Robot.driveSubsystem.resetEnc();
 		Robot.driveSubsystem.zeroGyro();
     }
@@ -101,5 +101,11 @@ public class DriveStraightToDistance extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     		end();
+    }
+    
+    void logging() {
+    		Robot.logCurrentCommandAndSubsystem("DriveStraightToDistance");
+    		Robot.driveSubsystem.logging();
+    		SmartDashboard.putBoolean("On Target Enc", Robot.driveSubsystem.encOnTarget());
     }
 }

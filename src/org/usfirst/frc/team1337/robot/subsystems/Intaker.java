@@ -4,6 +4,7 @@ import org.usfirst.frc.team1337.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -28,5 +29,9 @@ public class Intaker extends Subsystem {
 	public void IntakeSet(double speed) {
 		leftIntake.set(speed);
 		rightIntake.set(-speed);
+	}
+	
+	public void logging() {
+		SmartDashboard.putNumber("Intake speed", leftIntake.get());
 	}
 }

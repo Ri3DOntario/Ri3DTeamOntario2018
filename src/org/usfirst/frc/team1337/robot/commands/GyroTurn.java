@@ -72,11 +72,10 @@ public class GyroTurn extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		logging();
 		counter++; // might not even be necessary... or work at all
 		rotate = Math.max(Math.min(0.8, rotate), -0.8); // the double value can be changed for desired speeds
-		Robot.driveSubsystem.arcadeDrive(0, rotate);
-		SmartDashboard.putBoolean("gyroTurnPID.onTarget()", gyroPID.onTarget());
-		SmartDashboard.putNumber("Gyro Error", gyroPID.getError());
+		Robot.driveSubsystem.arcadeDrive(0, rotate);		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -89,7 +88,7 @@ public class GyroTurn extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		SmartDashboard.putBoolean("gyroTurnPID.onTarget()", gyroPID.onTarget());
+		logging();
 		gyroPID.disable();
 		Robot.driveSubsystem.arcadeDrive(0, 0);
 		Robot.driveSubsystem.resetEnc();
@@ -100,5 +99,12 @@ public class GyroTurn extends Command {
 	// subsystems is scheduled to run
 	protected void interrupted() {
 		end();
+	}
+	
+	void logging() {
+		Robot.logCurrentCommandAndSubsystem("GyroTurn");
+		Robot.driveSubsystem.logging();
+		SmartDashboard.putBoolean("gyroTurnPID.onTarget()", gyroPID.onTarget());
+		SmartDashboard.putNumber("Gyro Error", gyroPID.getError());
 	}
 }

@@ -73,8 +73,8 @@ public class DriveSubsystem extends Subsystem {
 
 		// gearShiftSolenoid = new Solenoid(0);
 
-		// leftMaster.configPeakOutputVoltage(+12f, -12f);
-		// rightMaster.configPeakOutputVoltage(+12f, -12f);
+		leftMaster.configPeakOutputForward(1, 0); //no timeout
+		rightMaster.configPeakOutputReverse(1, 0); //no timeout
 
 		// leftMaster.setNeutralMode(false);
 		// rightMaster.setNeutralMode(false);
@@ -94,7 +94,6 @@ public class DriveSubsystem extends Subsystem {
 			shiftGears(true);
 		else
 			shiftGears(false);
-		logging();
 	}
 
 	public void resetEnc() {

@@ -120,4 +120,8 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
+	
+	public static void logCurrentCommandAndSubsystem(String command) {
+		SmartDashboard.putString("Current command", command);
+	}
 }
