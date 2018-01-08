@@ -56,10 +56,10 @@ public class DriveSubsystem extends Subsystem {
 		}
 		sonic = new Ultrasonic(4, 5);
 
-		rightMaster = new WPI_TalonSRX(RobotMap.frontRightDrive);
-		leftMaster = new WPI_TalonSRX(RobotMap.frontLeftDrive);
-		rightSlave = new WPI_TalonSRX(RobotMap.backRightDrive);
-		leftSlave = new WPI_TalonSRX(RobotMap.backLeftDrive);
+		rightMaster = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE2);
+		leftMaster = new WPI_TalonSRX(RobotMap.LEFT_DRIVE2);
+		rightSlave = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE1);
+		leftSlave = new WPI_TalonSRX(RobotMap.LEFT_DRIVE1);
 
 		leftEnc = new Encoder(0, 1, false, EncodingType.k4X);
 		rightEnc = new Encoder(2, 3, false, EncodingType.k4X);
