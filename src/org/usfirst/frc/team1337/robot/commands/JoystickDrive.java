@@ -40,7 +40,7 @@ public class JoystickDrive extends Command {
     }
     
     void logging() {
-    		Robot.logCurrentCommandAndSubsystem("JoystickDrive");
+    		Robot.logCurrentCommand("JoystickDrive");
     		Robot.driveSubsystem.logging();
     }
 }

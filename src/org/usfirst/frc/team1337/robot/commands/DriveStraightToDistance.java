@@ -104,7 +104,7 @@ public class DriveStraightToDistance extends Command {
     }
     
     void logging() {
-    		Robot.logCurrentCommandAndSubsystem("DriveStraightToDistance");
+    		Robot.logCurrentCommand("DriveStraightToDistance");
     		Robot.driveSubsystem.logging();
     		SmartDashboard.putBoolean("On Target Enc", Robot.driveSubsystem.encOnTarget());
     }

@@ -42,7 +42,7 @@ public class Intake extends Command {
 	}
 
 	void logging() {
-		Robot.logCurrentCommandAndSubsystem("Intake");
+		Robot.logCurrentCommand("Intake");
 		Robot.intake.logging();
 	}
 }

@@ -40,7 +40,7 @@ public class ClimbControl extends Command {
 	}
 	
 	void logging() {
-		Robot.logCurrentCommandAndSubsystem("ClimbControl");
+		Robot.logCurrentCommand("ClimbControl");
 		Robot.climb.logging();
 	}
 }

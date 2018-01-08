@@ -102,7 +102,7 @@ public class GyroTurn extends Command {
 	}
 	
 	void logging() {
-		Robot.logCurrentCommandAndSubsystem("GyroTurn");
+		Robot.logCurrentCommand("GyroTurn");
 		Robot.driveSubsystem.logging();
 		SmartDashboard.putBoolean("gyroTurnPID.onTarget()", gyroPID.onTarget());
 		SmartDashboard.putNumber("Gyro Error", gyroPID.getError());
