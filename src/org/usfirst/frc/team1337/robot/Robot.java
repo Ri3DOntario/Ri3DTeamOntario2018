@@ -11,6 +11,8 @@ import org.usfirst.frc.team1337.robot.OI;
 import org.usfirst.frc.team1337.robot.commands.DriveCommand;
 import org.usfirst.frc.team1337.robot.subsystems.Climber;
 import org.usfirst.frc.team1337.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team1337.robot.subsystems.Intake;
+import org.usfirst.frc.team1337.robot.subsystems.Intaker;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,10 +26,10 @@ public class Robot extends IterativeRobot {
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
 	public static final DriveCommand drive = new DriveCommand();
 	public static final Climber climb = new Climber();
-//	public static final Intake intake = new Intake();
+	public static final Intaker intake = new Intaker();
 	public static OI oi;
 
-	Command autonomousCommand;
+	Command autonomousCommand;s
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
 	/**

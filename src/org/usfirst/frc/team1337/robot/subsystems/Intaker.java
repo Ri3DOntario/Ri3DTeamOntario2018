@@ -6,11 +6,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class Intake extends Subsystem {
-Victor leftIntake, rightIntake;
+public class Intaker extends Subsystem {
+
+	Victor leftIntake, rightIntake;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-public Intake(){
+public Intaker(){
 	leftIntake = new Victor(0);
 	rightIntake = new Victor(1);
 }
@@ -21,6 +22,5 @@ public Intake(){
     public void IntakeSet(double speed) {
     	leftIntake.set(speed);
     	rightIntake.set(-speed);
-    }
 }
-
+}
