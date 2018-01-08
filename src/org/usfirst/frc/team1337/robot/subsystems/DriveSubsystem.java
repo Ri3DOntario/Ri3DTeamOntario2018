@@ -38,100 +38,89 @@ public class DriveSubsystem extends Subsystem {
 	Ultrasonic sonic;
 	Encoder leftEnc, rightEnc;
 	WPI_TalonSRX rightMaster, rightSlave, leftMaster, leftSlave;
-	//Solenoid gearShiftSolenoid;
+	// Solenoid gearShiftSolenoid;
 	SpeedControllerGroup leftDrive, rightDrive;
 	DifferentialDrive myDrive;
 	PIDController encoderPID;
 	double speed;
+	//needs to be tuned
 	private double kPE = 0.0, kIE = 0.0, kDE = 0.0; // Encoder PID
 	public double reverse = 1;
 
 	public DriveSubsystem() {
 		try {
-		gyro = new ADXRS450_Gyro(SPI.Port.kMXP);
+			gyro = new ADXRS450_Gyro(SPI.Port.kMXP);
 		} catch (RuntimeException ex) {
 			DriverStation.reportError("Error instantiating gyro " + ex.getMessage(), true);
 		}
-sonic = new Ultrasonic(0,1);
+		sonic = new Ultrasonic(0, 1);
 
 		rightMaster = new WPI_TalonSRX(RobotMap.frontRightDrive);
 		leftMaster = new WPI_TalonSRX(RobotMap.frontLeftDrive);
 		rightSlave = new WPI_TalonSRX(RobotMap.backRightDrive);
 		leftSlave = new WPI_TalonSRX(RobotMap.backLeftDrive);
-		
-		leftEnc = new Encoder(0,1);
-		rightEnc=new Encoder(2,3);
-	
-		
-		leftDrive=new SpeedControllerGroup(leftMaster, leftSlave);
+
+		leftEnc = new Encoder(0, 1);
+		rightEnc = new Encoder(2, 3);
+
+		leftDrive = new SpeedControllerGroup(leftMaster, leftSlave);
 		rightDrive = new SpeedControllerGroup(rightMaster, rightSlave);
-		
+
 		myDrive = new DifferentialDrive(leftDrive, rightDrive);
 		rightDrive.setInverted(false);
 		leftDrive.setInverted(true);
 
-	
-		//gearShiftSolenoid = new Solenoid(0);
+		// gearShiftSolenoid = new Solenoid(0);
 
-	
-		//leftMaster.configPeakOutputVoltage(+12f, -12f);
-		//rightMaster.configPeakOutputVoltage(+12f, -12f);
+		// leftMaster.configPeakOutputVoltage(+12f, -12f);
+		// rightMaster.configPeakOutputVoltage(+12f, -12f);
 
-		//leftMaster.setNeutralMode(false);
-		//rightMaster.setNeutralMode(false);
+		// leftMaster.setNeutralMode(false);
+		// rightMaster.setNeutralMode(false);
 	}
-	
+
 	public void joystickDrive(double x, double y) {
-	/*	if(Robot.oi.joystick1.getRawButton(10) && reverse == 1) {
-			reverse = -1;
-		} else if (Robot.oi.joystick1.getRawButton(10) && reverse == -1) {
-			reverse = 1;
-		}*/
-		
-		
-	
-	myDrive.curvatureDrive(y*reverse, x, true);
-	//	myDrive.arcadeDrive(y, x, true);
-		if (Robot.oi.joystick1.getRawButton(1)) {
-			shiftGears(true);
-		} else {
-			shiftGears(false);
-		}
-	}
-	
-	public void resetEnc() {
-	leftEnc.reset();
-	rightEnc.reset();
+		/*
+		 * if(Robot.oi.joystick1.getRawButton(10) && reverse == 1) { reverse = -1; }
+		 * else if (Robot.oi.joystick1.getRawButton(10) && reverse == -1) { reverse = 1;
+		 * }
+		 */
 
+		myDrive.curvatureDrive(y * reverse, x, true);
+		// myDrive.arcadeDrive(y, x, true);
+		if (Robot.oi.joystick1.getRawButton(1))
+			shiftGears(true);
+		else
+			shiftGears(false);
 	}
-	
+
+	public void resetEnc() {
+		leftEnc.reset();
+		rightEnc.reset();
+	}
+
 	public void zeroGyro() {
 		gyro.reset();
 	}
-	
+
 	public void shiftGears(boolean shift) {
-	//	gearShiftSolenoid.set(shift);
-	}
-	
-	
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        setDefaultCommand(new DriveCommand());
-    }
-    
-    public void arcadeDrive(double speed, double rotate) {
-		myDrive.arcadeDrive(speed, rotate);
+		// gearShiftSolenoid.set(shift);
 	}
 
+	public void initDefaultCommand() {
+		setDefaultCommand(new DriveCommand());
+	}
+
+	public void arcadeDrive(double speed, double rotate) {
+		myDrive.arcadeDrive(speed, rotate);
+	}
 
 	public void Setpoint(double ticks) {
 		encoderPID.setSetpoint(ticks);
 	}
 
 	public double sendSpeed() {
-		speed = Math.max(Math.min(0.8, speed), -0.8); // the double value can be
-
-		return speed;
+		return Math.max(Math.min(0.8, speed), -0.8); // the double value can be
 	}
 
 	public void resetEncPID() {
@@ -172,20 +161,20 @@ sonic = new Ultrasonic(0,1);
 		});
 
 		encoderPID.setAbsoluteTolerance(25); // might need to be tuned if command never ends
-
 	}
 
 	public void enableEncPID() {
 		encoderPID.enable();
 	}
+
 	public double getGyro() {
 		return gyro.getAngle();
 	}
-    public void logging() {
-    	SmartDashboard.putNumber("left encoder", leftEnc.getDistance());
-    	SmartDashboard.putNumber("right encoder", rightEnc.getDistance());
-    	SmartDashboard.putNumber("gyro", gyro.getAngle());
-    	SmartDashboard.putNumber("ultrasonic", sonic.getRangeMM());
-    }
-}
 
+	public void logging() {
+		SmartDashboard.putNumber("left encoder", leftEnc.getDistance());
+		SmartDashboard.putNumber("right encoder", rightEnc.getDistance());
+		SmartDashboard.putNumber("gyro", gyro.getAngle());
+		SmartDashboard.putNumber("ultrasonic", sonic.getRangeMM());
+	}
+}
