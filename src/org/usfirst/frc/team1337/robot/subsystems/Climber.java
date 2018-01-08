@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1337.robot.subsystems;
 
 import org.usfirst.frc.team1337.robot.Robot;
+import org.usfirst.frc.team1337.robot.RobotMap;
 import org.usfirst.frc.team1337.robot.commands.ClimbControl;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -19,10 +20,10 @@ public class Climber extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	public Climber() {
-		leftMaster = new WPI_TalonSRX(5);
-		leftSlave = new WPI_TalonSRX(6);
-		rightMaster = new WPI_TalonSRX(7);
-		rightSlave = new WPI_TalonSRX(8);
+		leftMaster = new WPI_TalonSRX(RobotMap.LEFT_CLIMB_MASTER);
+		leftSlave = new WPI_TalonSRX(RobotMap.LEFT_CLIMB_SLAVE);
+		rightMaster = new WPI_TalonSRX(RobotMap.RIGHT_CLIMB_MASTER);
+		rightSlave = new WPI_TalonSRX(RobotMap.RIGHT_CLIMB_SLAVE);
 
 		climbLeft = new SpeedControllerGroup(leftMaster, leftSlave);
 		climbRight = new SpeedControllerGroup(rightMaster, rightSlave);
