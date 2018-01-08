@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -44,8 +45,7 @@ public class DriveStraightToDistance extends Command {
 
 			@Override
 			public double pidGet() {
-				//return Robot.driveSubsystem angle
-				return 0.0;
+				return Robot.driveSubsystem.getGyro();
 			}
 		}, new PIDOutput() {
 			@Override
@@ -61,24 +61,58 @@ public class DriveStraightToDistance extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.driveSubsystem.initEncPID();
+		Robot.driveSubsystem.resetEncPID();
+		Robot.driveSubsystem.Setpoint(mySetpoint);
+		Robot.driveSubsystem.resetEnc();
+		Robot.driveSubsystem.zeroGyro();
+		gyroPID.reset();
+		gyroPID.enable();
+		Robot.driveSubsystem.enableEncPID();
     	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.driveSubsystem.enableEncPID();
+
+		// changed for desired
+		// speeds
+		Robot.driveSubsystem.arcadeDrive(Robot.driveSubsystem.sendSpeed(), rotate);
+
+		counter++;
+		SmartDashboard.putBoolean("On Target Enc", Robot.driveSubsystem.encOnTarget());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+    	if (counter >= timeout){
+			return true;
+		}else{
+			return false;
+		}
+    
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	SmartDashboard.putBoolean("On Target Enc", Robot.driveSubsystem.encOnTarget());
+		Robot.driveSubsystem.disableEncPID();
+		gyroPID.disable();
+		Robot.driveSubsystem.arcadeDrive(0, 0);
+		Robot.driveSubsystem.resetEnc();
+		Robot.driveSubsystem.zeroGyro();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	SmartDashboard.putBoolean("On Target Enc", Robot.driveSubsystem.encOnTarget());
+
+		Robot.driveSubsystem.disableEncPID();
+		gyroPID.disable();
+		Robot.driveSubsystem.arcadeDrive(0, 0);
+		Robot.driveSubsystem.resetEnc();
+		Robot.driveSubsystem.zeroGyro();
     }
 }

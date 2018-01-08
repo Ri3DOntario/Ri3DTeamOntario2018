@@ -162,7 +162,7 @@ sonic = new Ultrasonic(0,1);
 
 			@Override
 			public double pidGet() {
-				return 0.0; //encoder distance
+				return leftEnc.getDistance();
 			}
 		}, new PIDOutput() {
 			@Override
@@ -177,6 +177,9 @@ sonic = new Ultrasonic(0,1);
 
 	public void enableEncPID() {
 		encoderPID.enable();
+	}
+	public double getGyro() {
+		return gyro.getAngle();
 	}
     public void logging() {
     	SmartDashboard.putNumber("left encoder", leftEnc.getDistance());
