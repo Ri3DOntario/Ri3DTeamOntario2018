@@ -89,7 +89,7 @@ public class DriveSubsystem extends Subsystem {
 			comp.stop();
 		}
 		myDrive.curvatureDrive(y * reverse, x, true);
-		if (Robot.oi.joystick1.getRawButton(5))
+		if (Robot.oi.joystick1.getRawButton(6))
 			shiftGears(true);
 		else
 			shiftGears(false);

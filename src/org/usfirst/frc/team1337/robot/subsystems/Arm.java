@@ -38,15 +38,15 @@ public Arm() {
     }
  
     public void ArmPID(double speed) {
-     if(Robot.oi.joystick2.getRawButton(1)){
+     if(Robot.oi.joystick2.getRawButton(3)){ //intake
 			arm.set(ControlMode.Position, 0);
-	} else if (Robot.oi.joystick2.getRawButton(2)){
+	} else if (Robot.oi.joystick1.getRawButton(4)){ //scoring high scale
 		arm.set(ControlMode.Position, 0);
-	} else if (Robot.oi.joystick2.getRawButton(3)) {
+	} else if (Robot.oi.joystick1.getRawAxis(2) >= .60) { //intake
 		arm.set(ControlMode.Position, 0);
-	} else if (Robot.oi.joystick2.getRawButton(4)) {
+	} else if (Robot.oi.joystick1.getRawAxis(3) >= 0.60) {//outake
 		arm.set(ControlMode.Position, 0);
-	} else if (Robot.oi.joystick2.getRawButton(5)) {
+	} else if (Robot.oi.joystick1.getRawButton(2)) {//climb position
 		arm.set(ControlMode.Position, 0);
 	} else {
 		arm.set(ControlMode.PercentOutput, speed*0.40);

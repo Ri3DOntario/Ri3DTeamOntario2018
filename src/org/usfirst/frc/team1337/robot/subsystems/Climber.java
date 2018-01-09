@@ -58,16 +58,20 @@ public class Climber extends Subsystem {
 	public void set(double speed) {
 		//climbLeft.set(speed);
 		//climbRight.set(speed);
-		   if(Robot.oi.joystick2.getRawButton(1)){
+	     if(Robot.oi.joystick2.getRawButton(3)){ //intake
 				leftMaster.set(ControlMode.Position, 0);
-		} else if (Robot.oi.joystick2.getRawButton(2)){
+	 	} else if (Robot.oi.joystick1.getRawButton(4)){ //scoring high scale
 			leftMaster.set(ControlMode.Position, 0);
-		} else if (Robot.oi.joystick2.getRawButton(3)) {
+		} else if (Robot.oi.joystick1.getPOV() == 180) { //climb down
 			leftMaster.set(ControlMode.Position, 0);
-		} else if (Robot.oi.joystick2.getRawButton(4)) {
+		} else if (Robot.oi.joystick1.getRawAxis(2) >= .60) { //intake
 			leftMaster.set(ControlMode.Position, 0);
-		} else if (Robot.oi.joystick2.getRawButton(5)) {
+		} else if (Robot.oi.joystick1.getRawAxis(3) >= 0.60) {//outake
 			leftMaster.set(ControlMode.Position, 0);
+		} else if (Robot.oi.joystick1.getRawButton(2)) {//climb 
+			leftMaster.set(ControlMode.Position, 0);
+		} else if (Robot.oi.joystick1.getPOV() == 0) {//climb up
+			leftMaster.set(ControlMode.Position, 0);	
 		} else {
 			leftMaster.set(ControlMode.PercentOutput, speed*0.25);
 		}
