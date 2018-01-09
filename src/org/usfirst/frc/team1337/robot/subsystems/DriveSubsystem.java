@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.*;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -35,12 +36,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class DriveSubsystem extends Subsystem {
+	Compressor comp = new Compressor();
 	final double MAX_SPEED = 0.8;
 	ADXRS450_Gyro gyro;
 	Ultrasonic sonic;
 	Encoder leftEnc, rightEnc;
 	WPI_TalonSRX rightMaster, rightSlave, leftMaster, leftSlave;
-	// Solenoid gearShiftSolenoid;
+	DoubleSolenoid gearShiftSolenoid;
 	SpeedControllerGroup leftDrive, rightDrive;
 	DifferentialDrive myDrive;
 	PIDController encoderPID;
@@ -72,7 +74,7 @@ public class DriveSubsystem extends Subsystem {
 		rightDrive.setInverted(false);
 		leftDrive.setInverted(true);
 
-		// gearShiftSolenoid = new Solenoid(0);
+		gearShiftSolenoid = new DoubleSolenoid(4,5);
 
 		leftMaster.configPeakOutputForward(1, 0); // full 12v, no timeout
 		rightMaster.configPeakOutputReverse(1, 0); // full 12v, no timeout
@@ -81,8 +83,13 @@ public class DriveSubsystem extends Subsystem {
 	public void joystickDrive(double x, double y) {
 		/*if (Robot.oi.joystick1.getRawButtonPressed(10))
 			reverse *= -1;*/
+		if(Robot.oi.joystick1.getRawButton(6)) {
+			comp.start();
+		}else {
+			comp.stop();
+		}
 		myDrive.curvatureDrive(y * reverse, x, true);
-		if (Robot.oi.joystick1.getRawButton(1))
+		if (Robot.oi.joystick1.getRawButton(5))
 			shiftGears(true);
 		else
 			shiftGears(false);
@@ -99,7 +106,11 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	public void shiftGears(boolean shift) {
-		// gearShiftSolenoid.set(shift);
+		if(shift) {
+			gearShiftSolenoid.set(DoubleSolenoid.Value.kForward);
+		}else {
+			gearShiftSolenoid.set(DoubleSolenoid.Value.kReverse);
+		}
 	}
 
 	public void initDefaultCommand() {

@@ -14,21 +14,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Arm extends Subsystem {
-WPI_TalonSRX arm;
+public WPI_TalonSRX arm;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 public Arm() {
-	arm = new WPI_TalonSRX(8);
+	arm = new WPI_TalonSRX(9);
 	arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 5);
 	arm.config_kP(0, 0.0, 0);
 	arm.config_kI(0, 0.0, 0);
 	arm.config_kD(0, 0.0, 0);
 	
-	arm.configForwardSoftLimitThreshold(0, 0);
-	arm.configReverseSoftLimitThreshold(0, 0);
-	arm.configForwardSoftLimitEnable(true, 0);
-	arm.configReverseSoftLimitEnable(true, 0);
+	//arm.configForwardSoftLimitThreshold(0, 0);
+	//arm.configReverseSoftLimitThreshold(0, 0);
+	arm.configForwardSoftLimitEnable(false, 0);
+	arm.configReverseSoftLimitEnable(false, 0);
 	
 }
     public void initDefaultCommand() {
@@ -49,7 +49,7 @@ public Arm() {
 	} else if (Robot.oi.joystick2.getRawButton(5)) {
 		arm.set(ControlMode.Position, 0);
 	} else {
-		arm.set(ControlMode.PercentOutput, speed*0.25);
+		arm.set(ControlMode.PercentOutput, speed*0.40);
 	}
  	logging();
 
