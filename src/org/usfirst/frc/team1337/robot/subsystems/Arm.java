@@ -48,6 +48,8 @@ public Arm() {
 		arm.set(ControlMode.Position, 0);
 	} else if (Robot.oi.joystick1.getRawButton(2)) {//climb position
 		arm.set(ControlMode.Position, 0);
+	} else if (Robot.oi.joystick1.getRawButton(1)) {//switch
+		arm.set(ControlMode.Position, 0);
 	} else {
 		arm.set(ControlMode.PercentOutput, speed*0.40);
 	}

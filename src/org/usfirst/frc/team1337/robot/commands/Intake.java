@@ -20,10 +20,7 @@ public class Intake extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		logging();
-		if (Robot.oi.joystick1.getRawButton(2))
-			Robot.intake.set(1);
-		else
-			Robot.intake.set(0);
+		Robot.intake.set(Robot.oi.joystick1.getRawAxis(2)-Robot.oi.joystick1.getRawAxis(3));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

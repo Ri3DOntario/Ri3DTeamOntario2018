@@ -21,7 +21,11 @@ public class ClimbControl extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		logging();
-		Robot.climb.set(Robot.oi.joystick2.getRawAxis(OI.J1_LT) - Robot.oi.joystick2.getRawAxis(OI.J1_RT));
+		if(Robot.oi.joystick1.getPOV()==0) {
+			Robot.climb.set(1);
+		}else if (Robot.oi.joystick1.getPOV()==180) {
+			Robot.climb.set(-1);
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
