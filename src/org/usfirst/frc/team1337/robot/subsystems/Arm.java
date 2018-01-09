@@ -58,5 +58,8 @@ public Arm() {
     	SmartDashboard.putNumber("arm position", arm.getSelectedSensorPosition(0));
     	SmartDashboard.putNumber("arm set pos", arm.getActiveTrajectoryPosition());
     }
+    public void AutoArm(double pos) {
+    	arm.set(ControlMode.Position, pos);
+    }
 }
 

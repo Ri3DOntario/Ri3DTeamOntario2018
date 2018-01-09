@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Climber extends Subsystem {
-	WPI_TalonSRX leftMaster, rightMaster, leftSlave, rightSlave;
+	public WPI_TalonSRX leftMaster, rightMaster, leftSlave, rightSlave;
 	SpeedControllerGroup climbLeft, climbRight;
 
 	// Put methods for controlling this subsystem
@@ -73,6 +73,9 @@ public class Climber extends Subsystem {
 		}
 	}
 	
+	public void AutoClimb(double pos) {
+		leftMaster.set(ControlMode.Position, pos);
+	}
 	public void logging() {
 		SmartDashboard.putNumber("climber pos", leftMaster.getSelectedSensorPosition(0));
     	SmartDashboard.putNumber("climber preset", leftMaster.getActiveTrajectoryPosition());
