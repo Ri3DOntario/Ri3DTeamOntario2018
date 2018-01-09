@@ -7,6 +7,7 @@ import org.usfirst.frc.team1337.robot.commands.ClimbControl;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -14,7 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Climber extends Subsystem {
-	WPI_TalonSRX leftMaster, rightMaster, leftSlave, rightSlave;
+	WPI_TalonSRX leftMaster, rightMaster, leftSlave;
+	Victor rightSlave;
 	SpeedControllerGroup climbLeft, climbRight;
 
 	// Put methods for controlling this subsystem
@@ -23,7 +25,7 @@ public class Climber extends Subsystem {
 		leftMaster = new WPI_TalonSRX(RobotMap.LEFT_CLIMB_MASTER);
 		leftSlave = new WPI_TalonSRX(RobotMap.LEFT_CLIMB_SLAVE);
 		rightMaster = new WPI_TalonSRX(RobotMap.RIGHT_CLIMB_MASTER);
-		rightSlave = new WPI_TalonSRX(RobotMap.RIGHT_CLIMB_SLAVE);
+		rightSlave = new Victor(RobotMap.RIGHT_CLIMB_SLAVE);
 
 		climbLeft = new SpeedControllerGroup(leftMaster, leftSlave);
 		climbRight = new SpeedControllerGroup(rightMaster, rightSlave);
