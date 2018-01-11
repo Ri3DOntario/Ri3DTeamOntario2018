@@ -78,12 +78,13 @@ public class DriveSubsystem extends Subsystem {
 
 		leftMaster.configPeakOutputForward(1, 0); // full 12v, no timeout
 		rightMaster.configPeakOutputReverse(1, 0); // full 12v, no timeout
+		
 	}
 
 	public void joystickDrive(double x, double y) {
 		/*if (Robot.oi.joystick1.getRawButtonPressed(10))
 			reverse *= -1;*/
-		if(Robot.oi.joystick1.getRawButton(6)) {
+		if(Robot.oi.joystick2.getRawButton(6)) {
 			comp.start();
 		}else {
 			comp.stop();

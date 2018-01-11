@@ -21,7 +21,15 @@ public class PIDArm extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	   Robot.armSub.ArmPID(Robot.oi.joystick2.getRawAxis(5));
+    	if(Robot.oi.joystick1.getRawButton(1)) {
+    		Robot.armSub.ArmPID(0.5);
+    	}else if (Robot.oi.joystick1.getRawButton(2)) {
+    		Robot.armSub.ArmPID(-0.5);
+
+    	}else {
+    		Robot.armSub.ArmPID(0.0);
+
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

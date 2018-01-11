@@ -29,7 +29,7 @@ public Arm() {
 	//arm.configReverseSoftLimitThreshold(0, 0);
 	arm.configForwardSoftLimitEnable(false, 0);
 	arm.configReverseSoftLimitEnable(false, 0);
-	
+	arm.setSensorPhase(true);
 }
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -42,16 +42,12 @@ public Arm() {
 			arm.set(ControlMode.Position, 0);
 	} else if (Robot.oi.joystick1.getRawButton(4)){ //scoring high scale
 		arm.set(ControlMode.Position, 0);
-	} else if (Robot.oi.joystick1.getRawAxis(2) >= .60) { //intake
-		arm.set(ControlMode.Position, 0);
-	} else if (Robot.oi.joystick1.getRawAxis(3) >= 0.60) {//outake
-		arm.set(ControlMode.Position, 0);
-	} else if (Robot.oi.joystick1.getRawButton(2)) {//climb position
+	/*} else if (Robot.oi.joystick1.getRawButton(2)) {//climb position
 		arm.set(ControlMode.Position, 0);
 	} else if (Robot.oi.joystick1.getRawButton(1)) {//switch
-		arm.set(ControlMode.Position, 0);
+		arm.set(ControlMode.Position, 0);*/
 	} else {
-		arm.set(ControlMode.PercentOutput, speed*0.40);
+		arm.set(ControlMode.PercentOutput, speed*0.70);
 	}
  	logging();
 

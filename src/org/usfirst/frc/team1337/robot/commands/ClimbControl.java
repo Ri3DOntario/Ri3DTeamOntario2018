@@ -22,9 +22,11 @@ public class ClimbControl extends Command {
 	protected void execute() {
 		logging();
 		if(Robot.oi.joystick1.getPOV()==0) {
-			Robot.climb.set(1);
-		}else if (Robot.oi.joystick1.getPOV()==180) {
 			Robot.climb.set(-1);
+		}else if (Robot.oi.joystick1.getPOV()==180) {
+			Robot.climb.set(1);
+		}else {
+			Robot.climb.set(0);
 		}
 	}
 
