@@ -87,9 +87,7 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	public void joystickDrive(double x, double y) {
-		
-		rightMaster.configVoltageCompSaturation(12* 1.0, 0);
-		
+				
 		/*if (Robot.oi.joystick1.getRawButtonPressed(10))
 			reverse *= -1;*/
 		if(Robot.oi.joystick2.getRawButton(6)) { //trigger off board compressor on/off
