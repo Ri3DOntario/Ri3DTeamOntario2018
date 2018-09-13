@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class Intake extends Command {
+double leftIn, rightIn;
 
 	public Intake() {
 		requires(Robot.intake);
@@ -19,8 +20,17 @@ public class Intake extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		leftIn = Robot.oi.joystick2.getRawAxis(2);
+		rightIn = Robot.oi.joystick2.getRawAxis(3);
+
 		logging();
-		Robot.intake.set(Robot.oi.joystick1.getRawAxis(2)-Robot.oi.joystick1.getRawAxis(3));
+		Robot.intake.set(leftIn-rightIn);
+		if (Math.abs(leftIn) > 0.10 || Math.abs(rightIn) > 0.10){
+			Robot.intake.actuate(true);
+
+		} else {
+			Robot.intake.actuate(false);
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
