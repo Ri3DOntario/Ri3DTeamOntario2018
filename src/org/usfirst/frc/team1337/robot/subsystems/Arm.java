@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Arm extends Subsystem {
+	
+//declare the motoro controller for the arm TalonSRX
 public WPI_TalonSRX arm;
 
     // Put methods for controlling this subsystem
@@ -21,6 +23,9 @@ public WPI_TalonSRX arm;
 public Arm() {
 	arm = new WPI_TalonSRX(9);
 	arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 5);
+	
+	//these need to be tuned
+	//kill me
 	arm.config_kP(0, 0.0, 0);
 	arm.config_kI(0, 0.0, 0);
 	arm.config_kD(0, 0.0, 0);
@@ -37,6 +42,7 @@ public Arm() {
     	setDefaultCommand(new PIDArm());
     }
  
+    //oof this 
     public void ArmPID(double speed) {
      if(Robot.oi.joystick2.getRawButton(3)){ //intake
 			arm.set(ControlMode.Position, 0);
@@ -52,10 +58,12 @@ public Arm() {
  	logging();
 
     }
+    
     public void logging() {
-    	SmartDashboard.putNumber("arm position", arm.getSelectedSensorPosition(0));
-    	SmartDashboard.putNumber("arm set pos", arm.getActiveTrajectoryPosition());
+    	SmartDashboard.putNumber("arm position", arm.getSelectedSensorPosition(0)); //wtf is this
+    	SmartDashboard.putNumber("arm set pos", arm.getActiveTrajectoryPosition()); //wtf is this also
     }
+    //method to control arm during auto 
     public void AutoArm(double pos) {
     	arm.set(ControlMode.Position, pos);
     }

@@ -30,6 +30,7 @@ public class Climber extends Subsystem {
 		//climbLeft = new SpeedControllerGroup(leftMaster, leftSlave);
 		//climbRight = new SpeedControllerGroup(rightMaster, rightSlave);
 		
+		//set other motors to follow the left master
 		leftSlave.set(ControlMode.Follower, leftMaster.getDeviceID());
 		rightMaster.set(ControlMode.Follower, leftMaster.getDeviceID());
 		rightSlave.set(ControlMode.Follower, leftMaster.getDeviceID());
@@ -39,17 +40,24 @@ public class Climber extends Subsystem {
 		rightMaster.setInverted(true);
 		rightSlave.setInverted(true);
 		
+	//set the sensor to an absolute magnetic encoder
 		leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 5);
+		
+		//set PID values
+		//oof this 
 		leftMaster.config_kP(0, 0.0, 0);
 		leftMaster.config_kI(0, 0.0, 0);
 		leftMaster.config_kD(0, 0.0, 0);
 		
+		//configure software limits for the climber
+		//why are there duplicates
 		leftMaster.configForwardSoftLimitThreshold(0, 0);
 		leftMaster.configReverseSoftLimitThreshold(0, 0);
 		leftMaster.configForwardSoftLimitEnable(false, 0);
 		leftMaster.configReverseSoftLimitEnable(false, 0);
 	}
 
+	//this command will always run and will be the first to run unless interrupted 
 	public void initDefaultCommand() {
 		setDefaultCommand(new ClimbControl());
 	}
@@ -71,9 +79,14 @@ public class Climber extends Subsystem {
 	     logging();
 	}
 	
+	//Automatically climb using PID
+	//oof this could really break things if not tuned properly
+	//I don't recommend using auto climb unless we spend time doing this 
 	public void AutoClimb(double pos) {
 		leftMaster.set(ControlMode.Position, pos);
 	}
+	
+	
 	public void logging() {
 		SmartDashboard.putNumber("climber pos", leftMaster.getSelectedSensorPosition(0));
     	SmartDashboard.putNumber("climber preset", leftMaster.getActiveTrajectoryPosition());

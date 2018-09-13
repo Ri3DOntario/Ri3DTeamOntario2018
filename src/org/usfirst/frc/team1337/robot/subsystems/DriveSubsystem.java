@@ -129,6 +129,7 @@ public class DriveSubsystem extends Subsystem {
 		}
 	}
 
+	//this command is always running
 	public void initDefaultCommand() {
 		setDefaultCommand(new JoystickDrive());
 	}
@@ -199,10 +200,12 @@ public class DriveSubsystem extends Subsystem {
 		encoderPID.enable();
 	}
 
+	//get angle in degrees
 	public double getGyro() {
 		return gyro.getAngle();
 	}
 
+	//not really logging, more just displaying information live on the smartdashboard
 	public void logging() {
 		SmartDashboard.putNumber("left encoder", leftEnc.getDistance());
 		SmartDashboard.putNumber("right encoder", rightEnc.getDistance());
