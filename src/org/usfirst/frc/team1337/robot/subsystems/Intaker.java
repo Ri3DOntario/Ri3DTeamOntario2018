@@ -21,10 +21,11 @@ public class Intaker extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	public Intaker() {
+		//Initialize the intake motor controllers
 		leftIntake = new Victor(0);
 		rightIntake = new Victor(1);
 		
-		
+		//initialize the solenoids
 		//IDs need to be updated
 		leftSol = new Solenoid(4);
 		rightSol = new Solenoid(5);
@@ -36,7 +37,7 @@ public class Intaker extends Subsystem {
 		// setDefaultCommand(new MySpecialCommand());
 		setDefaultCommand(new Intake());
 	}
-
+//control the intake wheel speed
 	public void set(double speed) {
 		leftIntake.set(speed);
 		rightIntake.set(-speed);
@@ -45,6 +46,7 @@ public class Intaker extends Subsystem {
 	public void logging() {
 		SmartDashboard.putNumber("Intake speed", leftIntake.get());
 	}
+	//control the pneumatic cylinders to actuate the intake
 	public void actuate(boolean act) {
 		leftSol.set(act);
 		rightSol.set(act);

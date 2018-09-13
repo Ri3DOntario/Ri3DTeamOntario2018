@@ -20,7 +20,9 @@ public class ClimbControl extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+	
 		logging();
+		//use the hat to control the movement of the climber 
 		if(Robot.oi.joystick1.getPOV()==0) {
 			Robot.climb.set(-1);
 		}else if (Robot.oi.joystick1.getPOV()==180) {
@@ -44,7 +46,8 @@ public class ClimbControl extends Command {
 	protected void interrupted() {
 		end();
 	}
-	
+	//current logging
+	//do we need it?
 	void logging() {
 		Robot.logCurrentCommand("ClimbControl");
 		Robot.climb.logging();

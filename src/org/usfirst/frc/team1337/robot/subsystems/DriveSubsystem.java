@@ -50,11 +50,16 @@ public class DriveSubsystem extends Subsystem {
 	public double reverse = 1;
 
 	public DriveSubsystem() {
+		
+		//try starting up the gyro 
 		try {
 			gyro = new ADXRS450_Gyro(SPI.Port.kMXP);
-		} catch (RuntimeException ex) {
+		} catch (RuntimeException ex) { //don't kms 
 			DriverStation.reportError("Error instantiating gyro " + ex.getMessage(), true);
 		}
+		
+		//do we even need this?
+		//idk why we even have it on the robot
 		sonic = new Ultrasonic(RobotMap.ULTRASONIC_PING, RobotMap.ULTRASONIC_ECHO);
 
 		rightMaster = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE_MASTER);
@@ -72,6 +77,7 @@ public class DriveSubsystem extends Subsystem {
 		rightDrive.setInverted(false);
 		leftDrive.setInverted(true);
 
+		//initialize the solenoid for gear shifting
 		gearShiftSolenoid = new DoubleSolenoid(4,5);
 
 		leftMaster.configPeakOutputForward(1, 0); // full 12v, no timeout
@@ -93,6 +99,9 @@ public class DriveSubsystem extends Subsystem {
 		}else {
 			comp.stop();
 		}
+		
+		//chezy drive basically
+		//can this be configured to be more optimized?
 		myDrive.curvatureDrive(y * reverse, x, true);
 		
 		if (Robot.oi.joystick1.getRawButton(6))
@@ -111,6 +120,7 @@ public class DriveSubsystem extends Subsystem {
 		gyro.reset();
 	}
 
+	//shift gears
 	public void shiftGears(boolean shift) {
 		if(shift) {
 			gearShiftSolenoid.set(DoubleSolenoid.Value.kForward);
@@ -123,6 +133,8 @@ public class DriveSubsystem extends Subsystem {
 		setDefaultCommand(new JoystickDrive());
 	}
 
+	//lets switch to chezy drive at some point
+	//oh, do we even use this? Can it be commented out?
 	public void arcadeDrive(double speed, double rotate) {
 		myDrive.arcadeDrive(speed, rotate);
 	}
@@ -134,6 +146,7 @@ public class DriveSubsystem extends Subsystem {
 	public void Setpoint(double ticks) {
 		encoderPID.setSetpoint(ticks);
 	}
+
 
 	public double scaleSpeedPID() {
 		return Math.max(Math.min(MAX_SPEED, speed), -MAX_SPEED);
@@ -151,6 +164,8 @@ public class DriveSubsystem extends Subsystem {
 		encoderPID.disable();
 	}
 
+	//idk wtf this is anymore
+	//some custom PID shit
 	public void initEncPID() {
 		encoderPID = new PIDController(kPE, kIE, kDE, new PIDSource() {
 			PIDSourceType m_sourceType = PIDSourceType.kDisplacement;
@@ -174,6 +189,7 @@ public class DriveSubsystem extends Subsystem {
 			public void pidWrite(double pidSpeed) {
 				speed = pidSpeed;
 			}
+			//I want to die Jed pls explain
 		});
 
 		encoderPID.setAbsoluteTolerance(25); // might need to be tuned if command never ends
