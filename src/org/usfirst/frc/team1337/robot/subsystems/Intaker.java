@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1337.robot.subsystems;
 
 import org.usfirst.frc.team1337.robot.commands.Intake;
+import edu.wpi.first.wpilibj.SpeedController;
 
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
