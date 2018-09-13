@@ -86,10 +86,10 @@ public class Climber extends Subsystem {
 		leftMaster.set(ControlMode.Position, pos);
 	}
 	
-	
+	//oof more not logging logging
 	public void logging() {
-		SmartDashboard.putNumber("climber pos", leftMaster.getSelectedSensorPosition(0));
-    	SmartDashboard.putNumber("climber preset", leftMaster.getActiveTrajectoryPosition());
+		SmartDashboard.putNumber("climber pos", leftMaster.getSelectedSensorPosition(0)); //wtf is this
+    	SmartDashboard.putNumber("climber preset", leftMaster.getActiveTrajectoryPosition());//wtf is this also
 
 	}
 }

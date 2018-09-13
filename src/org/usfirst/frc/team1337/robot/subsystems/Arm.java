@@ -22,6 +22,8 @@ public WPI_TalonSRX arm;
     // here. Call these from Commands.
 public Arm() {
 	arm = new WPI_TalonSRX(9);
+	
+	//set the feedback sensor to a absolute magnetic encoder
 	arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 5);
 	
 	//these need to be tuned
@@ -32,10 +34,14 @@ public Arm() {
 	
 	//arm.configForwardSoftLimitThreshold(0, 0);
 	//arm.configReverseSoftLimitThreshold(0, 0);
+	
+	//confgiure software limits
 	arm.configForwardSoftLimitEnable(false, 0);
 	arm.configReverseSoftLimitEnable(false, 0);
 	arm.setSensorPhase(true);
 }
+
+//the command will continuously run from the beginning unless interrupted 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
@@ -53,12 +59,15 @@ public Arm() {
 	} else if (Robot.oi.joystick1.getRawButton(1)) {//switch
 		arm.set(ControlMode.Position, 0);*/
 	} else {
+		//why is it being limited to 70%??
 		arm.set(ControlMode.PercentOutput, speed*0.70);
 	}
  	logging();
 
     }
     
+    //oof why is this called logging when it is not logging anything?
+    //this will display live information on the smartdashboard
     public void logging() {
     	SmartDashboard.putNumber("arm position", arm.getSelectedSensorPosition(0)); //wtf is this
     	SmartDashboard.putNumber("arm set pos", arm.getActiveTrajectoryPosition()); //wtf is this also

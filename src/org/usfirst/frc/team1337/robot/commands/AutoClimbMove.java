@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AutoClimbMove extends Command {
 double pos;
-int timer;
+int timer; //a timeout so it doesn't go on forever and break itself 
     public AutoClimbMove(double position) {
     	pos = position;
         // Use requires() here to declare subsystem dependencies
