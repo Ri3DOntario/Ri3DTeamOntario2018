@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1337.robot;
 
-import org.usfirst.frc.team1337.robot.commands.IntakeActuate;
 import org.usfirst.frc.team1337.robot.commands.ReverseDrive;
 
 import edu.wpi.first.wpilibj.Joystick;
