@@ -32,6 +32,7 @@ int timer; //a timeout so it doesn't go on forever and break itself
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	//within an error, auto move the climber (using PID). Uses a timeout as a fail safe 
     	if((Math.abs(Robot.climb.leftMaster.getSelectedSensorPosition(0))-Math.abs(Robot.climb.leftMaster.getActiveTrajectoryPosition()))>35 || timer < 40) {
     		return false;
     	}else {
