@@ -23,8 +23,10 @@ public class ClimbControl extends Command {
 	
 		logging();
 		//use the hat to control the movement of the climber 
+		//if the hat is going down
 		if(Robot.oi.joystick1.getPOV()==0) {
 			Robot.climb.set(-1);
+			//if the hat is pointing up
 		}else if (Robot.oi.joystick1.getPOV()==180) {
 			Robot.climb.set(1);
 		}else {
@@ -50,6 +52,7 @@ public class ClimbControl extends Command {
 	//do we need it?
 	void logging() {
 		Robot.logCurrentCommand("ClimbControl");
+		//oof
 		Robot.climb.logging();
 	}
 }

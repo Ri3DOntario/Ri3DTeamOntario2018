@@ -21,12 +21,14 @@ int timer; //a timeout so it doesn't go on forever and break itself
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	//reset timer each time the timer is called
     	timer = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.climb.AutoClimb(pos);
+    	//timer counts up appox. 50hz(?) may want to use a proper timer 
     	timer++;
     }
 
@@ -42,6 +44,7 @@ int timer; //a timeout so it doesn't go on forever and break itself
 
     // Called once after isFinished returns true
     protected void end() {
+    	//set the motor controller to stop moving
     	Robot.climb.leftMaster.set(ControlMode.PercentOutput, 0);
     }
 

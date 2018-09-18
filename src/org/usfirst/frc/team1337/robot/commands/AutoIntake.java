@@ -41,6 +41,7 @@ double setSpeed =0;
 
     // Called once after isFinished returns true
     protected void end() {
+    	//stop the intake, kinda a failsafe.
     	Robot.intake.set(0);
     }
 
