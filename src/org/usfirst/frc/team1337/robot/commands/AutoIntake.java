@@ -15,6 +15,7 @@ double setSpeed =0;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.intake);
+    	//
     	timer = time;
     	setSpeed = speed;
     }

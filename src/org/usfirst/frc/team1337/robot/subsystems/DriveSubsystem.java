@@ -92,8 +92,7 @@ public class DriveSubsystem extends Subsystem {
 
 	public void joystickDrive(double x, double y) {
 				
-		/*if (Robot.oi.joystick1.getRawButtonPressed(10))
-			reverse *= -1;*/
+	
 		if(Robot.oi.joystick2.getRawButton(6)) { //trigger off board compressor on/off
 			comp.start();
 		}else {
@@ -136,6 +135,7 @@ public class DriveSubsystem extends Subsystem {
 
 	//lets switch to chezy drive at some point
 	//oh, do we even use this? Can it be commented out?
+	//I think this is for auto
 	public void arcadeDrive(double speed, double rotate) {
 		myDrive.arcadeDrive(speed, rotate);
 	}
@@ -193,7 +193,9 @@ public class DriveSubsystem extends Subsystem {
 			//I want to die Jed pls explain
 		});
 
-		encoderPID.setAbsoluteTolerance(25); // might need to be tuned if command never ends
+		//how many inches is this?
+		encoderPID.setAbsoluteTolerance(50); // might need to be tuned if command never ends
+	
 	}
 
 	public void enableEncPID() {

@@ -33,7 +33,8 @@ public class AutoArmMove extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if((Math.abs(Robot.armSub.arm.getSelectedSensorPosition(0))-Math.abs(Robot.armSub.arm.getActiveTrajectoryPosition()))>35 || timer < 40) {
+    	//if sensor is within a tolerance, end the command
+    	if((Math.abs(Robot.armSub.arm.getSelectedSensorPosition(0))-Math.abs(Robot.armSub.arm.getActiveTrajectoryPosition()))>50 || timer < 40) {
     		return false;
     	}else {
     		return true;

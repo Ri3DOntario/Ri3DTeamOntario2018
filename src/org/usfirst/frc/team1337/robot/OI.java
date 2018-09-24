@@ -24,6 +24,7 @@ public class OI {
 	Button j1button10 = new JoystickButton(joystick1, 10);
 	
 	
+	//need to label these to know which buttons are which 
 	Button j2button1 = new JoystickButton(joystick2 ,1);
 	Button j2button2 = new JoystickButton(joystick2 ,2);
 	Button j2button3 = new JoystickButton(joystick2 ,3);
@@ -34,11 +35,15 @@ public class OI {
 	Button j2button8 = new JoystickButton(joystick2 ,8);
 	Button j2button9 = new JoystickButton(joystick2 ,9);
 	Button j2button10 = new JoystickButton(joystick2 ,10);
-
+	
+	//wtf is this?
 	public static final int J1_LT = 2, J1_RT = 3, J1_LEFT_STICK_Y_AXIS = 1, J1_RIGHT_STICK_X_AXIS = 4;
 	
+	//why doesn't this work
 	public OI(){
-		j1button10.whenPressed(new ReverseDrive());
+		
+		//how do I cancel this? What is the best way to do this?
+		j1button10.toggleWhenPressed(new ReverseDrive());
 		
 	}
 	

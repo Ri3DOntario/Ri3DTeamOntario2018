@@ -17,6 +17,8 @@ public class ZeroEncoders extends Command {
     protected void initialize() {
     		Robot.driveSubsystem.resetEnc();
     		Robot.driveSubsystem.resetGyro();
+    		
+    		//why is this called here?
     		logging();
     }
 
