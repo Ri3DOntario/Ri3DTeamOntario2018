@@ -21,8 +21,10 @@ public class PIDArm extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
+    	
     	if(Robot.oi.joystick1.getRawButton(1)) {
-    		Robot.armSub.ArmPID(0.5);
+    		Robot.armSub.ArmPID(0.5); //why is this set to this value?
     	}else if (Robot.oi.joystick1.getRawButton(2)) {
     		Robot.armSub.ArmPID(-0.5);
 

@@ -42,6 +42,7 @@ public class ReverseDrive extends Command {
 	}
 	
 	void logging() {
+		//current monitoring
 		Robot.logCurrentCommand("ReverseDrive");
 		Robot.driveSubsystem.logging();
 	}

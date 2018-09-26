@@ -199,6 +199,7 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	public void enableEncPID() {
+		//enable the PID 
 		encoderPID.enable();
 	}
 
