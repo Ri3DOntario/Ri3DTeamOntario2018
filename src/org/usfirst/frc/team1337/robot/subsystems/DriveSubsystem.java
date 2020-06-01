@@ -165,8 +165,7 @@ public class DriveSubsystem extends Subsystem {
 		encoderPID.disable();
 	}
 
-	//idk wtf this is anymore
-	//some custom PID shit
+	//PIDs
 	public void initEncPID() {
 		encoderPID = new PIDController(kPE, kIE, kDE, new PIDSource() {
 			PIDSourceType m_sourceType = PIDSourceType.kDisplacement;
